@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Dragon - Futuristic Chinese Cuisine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+        }
+        .heading-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        .hero-image {
+            background-image: url('http://static.photos/food/1200x630/88');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+        .nav-link:hover {
+            color: #ff5555;
+        }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            background: #000;
+            color: white;
+            padding: 1rem;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            left: 0;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-black bg-opacity-90 z-50 shadow-sm border-b border-red-500/20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl heading-font font-bold text-red-500">NEON DRAGON</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-gray-300 hover:text-red-500 transition">Menu</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-red-500 transition">Locations</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-red-500 transition">Our Story</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-red-500 transition">Reservations</a>
+                </div>
+                <div class="md:hidden">
+                    <i data-feather="menu" class="text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-image h-screen flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="container mx-auto px-6 z-10 text-center">
+            <h1 class="heading-font text-5xl md:text-7xl font-bold text-white mb-6" data-aos="fade-up">
+                FUTURE OF<br>CHINESE CUISINE
+            </h1>
+            <p class="text-xl text-white mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                Where ancient traditions meet cyberpunk innovation in every bite
+            </p>
+            <button class="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-medium transition" data-aos="fade-up" data-aos-delay="400">
+                Discover Our Menu
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content" class="py-20">
+        <section class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-aos="fade-up">
+                    Cyberpunk Specialties
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    Molecular gastronomy meets 2000-year-old recipes in our futuristic kitchen
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Product 1 -->
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 hover:border-red-500 transition" data-aos="fade-up">
+                    <img src="http://static.photos/food/640x360/101" alt="Cinnamon Social" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="heading-font text-xl font-bold mb-2">Cinnamon Social</h3>
+                        <p class="text-gray-600 mb-4">Our famous twisted cinnamon pastry with vanilla glaze</p>
+                        <button class="text-amber-600 font-medium hover:text-amber-700 transition">
+                            Learn More <i data-feather="arrow-right" class="inline ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 hover:border-red-500 transition" data-aos="fade-up" data-aos-delay="200">
+                    <img src="http://static.photos/food/640x360/102" alt="Danish Rye Bread" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="heading-font text-xl font-bold mb-2">Danish Rye Bread</h3>
+                        <p class="text-gray-600 mb-4">Traditional dense rye bread with seeds and malt</p>
+                        <button class="text-amber-600 font-medium hover:text-amber-700 transition">
+                            Learn More <i data-feather="arrow-right" class="inline ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700 hover:border-red-500 transition" data-aos="fade-up" data-aos-delay="400">
+                    <img src="http://static.photos/food/640x360/103" alt="Vanilla Spandauer" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="heading-font text-xl font-bold mb-2">Vanilla Spandauer</h3>
+                        <p class="text-gray-600 mb-4">Flaky pastry with rich vanilla custard center</p>
+                        <button class="text-amber-600 font-medium hover:text-amber-700 transition">
+                            Learn More <i data-feather="arrow-right" class="inline ml-1 w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="py-20 bg-gray-900 text-white mt-20">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10" data-aos="fade-right">
+                        <img src="http://static.photos/food/640x360/104" alt="Bakery interior" class="rounded-lg shadow-lg">
+                    </div>
+                    <div class="md:w-1/2" data-aos="fade-left">
+                        <h2 class="heading-font text-3xl md:text-4xl font-bold text-white mb-6">
+                            Neo-Shanghai Origins
+                        </h2>
+                        <p class="text-gray-300 mb-6">
+                            Founded in 2089 in the neon-lit streets of Neo-Shanghai, we blend ancient Chinese culinary arts with cutting-edge technology.
+                            Our chefs are trained in both traditional techniques and molecular gastronomy.
+                        </p>
+                        <p class="text-gray-300 mb-8">
+                            We believe in honoring the past while embracing the future. Every dish is a harmony of 5000 years of tradition and tomorrow's innovation.
+                        </p>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-medium transition">
+                            Read Our Story
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-16 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-10">
+                <div>
+                    <h3 class="heading-font text-xl font-bold mb-6">NEON DRAGON</h3>
+                    <p class="text-gray-400">
+                        Futuristic Chinese cuisine from Neo-Shanghai, where tradition meets tomorrow.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="heading-font font-bold mb-6">Navigation</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Menu</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Locations</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="heading-font font-bold mb-6">Contact</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="mail" class="mr-2 w-4 h-4"></i> hello@oleandsteen.com
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="phone" class="mr-2 w-4 h-4"></i> +44 20 1234 5678
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i data-feather="map-pin" class="mr-2 w-4 h-4"></i> London, UK
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="heading-font font-bold mb-6">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>© 2089 NEON DRAGON. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        feather.replace();
+    </script>
+</body>
+</html>

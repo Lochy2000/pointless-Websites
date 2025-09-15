@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Futuristic Fusion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+        .cyber-text {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
+        }
+        .glow {
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+        }
+        .glow:hover {
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
+        }
+        .neon-saffron {
+            color: #ff6600;
+        }
+        .bg-neon-saffron {
+            background-color: #ff6600;
+        }
+        .border-neon-saffron {
+            border-color: #ff6600;
+        }
+        .food-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .food-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+        }
+        .spice-level {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .spice-1 { background-color: #fbbf24; }
+        .spice-2 { background-color: #f59e0b; }
+        .spice-3 { background-color: #ea580c; }
+        .spice-4 { background-color: #dc2626; }
+        .spice-5 { background-color: #7c2d12; }
+    </style>
+</head>
+<body>
+    <nav class="bg-black bg-opacity-80 backdrop-blur-md fixed w-full z-50 border-b border-neon-saffron">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="cyber-text text-2xl neon-saffron">FUTURISTIC FUSION</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-neon-saffron transition">Home</a>
+                    <a href="menu.html" class="text-neon-saffron hover:text-neon-saffron transition">Menu</a>
+                    <a href="rewards.html" class="text-white hover:text-neon-saffron transition">Rewards</a>
+                    <a href="about.html" class="text-white hover:text-neon-saffron transition">About</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-neon-saffron text-black px-4 py-2 rounded-full font-bold hover:bg-opacity-90 transition">
+                        Order Now
+                    </button>
+                    <a href="account.html" class="text-white hover:text-neon-saffron">
+                        <i data-feather="user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto mb-12">
+            <h1 class="cyber-text text-4xl md:text-6xl mb-6 neon-saffron">NEON MENU</h1>
+            <p class="text-xl text-gray-300">Traditional flavors with a futuristic twist</p>
+        </div>
+
+        <div class="max-w-7xl mx-auto mb-12">
+            <div class="flex overflow-x-auto pb-4 space-x-2">
+                <button class="bg-neon-saffron text-black px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap">
+                    ALL ITEMS
+                </button>
+                <button class="bg-gray-800 text-white px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap hover:bg-gray-700 transition">
+                    STARTERS
+                </button>
+                <button class="bg-gray-800 text-white px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap hover:bg-gray-700 transition">
+                    MAINS
+                </button>
+                <button class="bg-gray-800 text-white px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap hover:bg-gray-700 transition">
+                    BREADS
+                </button>
+                <button class="bg-gray-800 text-white px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap hover:bg-gray-700 transition">
+                    DESSERTS
+                </button>
+                <button class="bg-gray-800 text-white px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap hover:bg-gray-700 transition">
+                    DRINKS
+                </button>
+                <button class="bg-gray-800 text-white px-6 py-2 rounded-full font-bold text-sm whitespace-nowrap hover:bg-gray-700 transition">
+                    VEGAN
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Appetizers -->
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up">
+                <img src="http://static.photos/food/640x360/4" alt="Holographic Samosa" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">HOLOGRAPHIC SAMOSA</h3>
+                        <div>
+                            <span class="spice-level spice-2"></span>
+                            <span class="spice-level spice-2"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Crispy pastry with glowing spice-infused potato filling</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹280</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                <img src="http://static.photos/food/640x360/5" alt="LED Pani Puri" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">LED PANI PURI</h3>
+                        <div>
+                            <span class="spice-level spice-3"></span>
+                            <span class="spice-level spice-3"></span>
+                            <span class="spice-level spice-3"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Light-emitting puris with temperature-changing waters</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹350</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mains -->
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up">
+                <img src="http://static.photos/food/640x360/6" alt="Cyber Butter Chicken" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">CYBER BUTTER CHICKEN</h3>
+                        <div>
+                            <span class="spice-level spice-2"></span>
+                            <span class="spice-level spice-2"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Tandoori chicken in molecular tomato gravy with edible glitter</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹450</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                <img src="http://static.photos/food/640x360/7" alt="Neon Vindaloo" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">NEON VINDALOO</h3>
+                        <div>
+                            <span class="spice-level spice-4"></span>
+                            <span class="spice-level spice-4"></span>
+                            <span class="spice-level spice-4"></span>
+                            <span class="spice-level spice-4"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Goan pork curry that glows brighter the spicier it gets</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹480</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-delay="200">
+                <img src="http://static.photos/food/640x360/8" alt="Quantum Biryani" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">QUANTUM BIRYANI</h3>
+                        <div>
+                            <span class="spice-level spice-3"></span>
+                            <span class="spice-level spice-3"></span>
+                            <span class="spice-level spice-3"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Layered rice with meat that changes flavor as you eat</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹520</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breads -->
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up">
+                <img src="http://static.photos/food/640x360/9" alt="Nano Naan" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">NANO NAAN</h3>
+                        <div>
+                            <span class="spice-level spice-1"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Leavened bread with embedded flavor capsules</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹180</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desserts -->
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                <img src="http://static.photos/food/640x360/10" alt="LED Gulab Jamun" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">LED GULAB JAMUN</h3>
+                        <div>
+                            <span class="spice-level"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Milk solids dumplings that light up when dipped in syrup</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹320</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-delay="200">
+                <img src="http://static.photos/food/640x360/11" alt="Holographic Kulfi" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">HOLOGRAPHIC KULFI</h3>
+                        <div>
+                            <span class="spice-level"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Traditional ice cream with projected flavor patterns</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹380</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drinks -->
+            <div class="food-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up">
+                <img src="http://static.photos/food/640x360/12" alt="Neon Lassi" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="cyber-text text-xl">NEON LASSSI</h3>
+                        <div>
+                            <span class="spice-level"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Yogurt drink that changes color with temperature</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-neon-saffron font-bold">₹250</span>
+                        <button class="text-neon-saffron border border-neon-saffron px-3 py-1 rounded-full text-sm hover:bg-neon-saffron hover:bg-opacity-10 transition">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto mt-16 text-center">
+            <h3 class="cyber-text text-2xl mb-6 neon-saffron">CAN'T DECIDE?</h3>
+            <p class="text-xl mb-6">Let our AI recommend dishes based on your taste profile</p>
+            <button class="bg-neon-saffron text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-opacity-90 transition glow">
+                GET RECOMMENDATIONS
+            </button>
+        </div>
+    </main>
+
+    <footer class="bg-black bg-opacity-80 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="cyber-text text-xl mb-4 neon-saffron">FUTURISTIC FUSION</h3>
+                    <p class="text-gray-400">Where ancient spices meet future tech.</p>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">EXPLORE</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-neon-saffron transition">Home</a></li>
+                        <li><a href="menu.html" class="text-gray-400 hover:text-neon-saffron transition">Menu</a></li>
+                        <li><a href="rewards.html" class="text-gray-400 hover:text-neon-saffron transition">Rewards</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-neon-saffron transition">Our Story</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">HELP</h4>
+                    <ul class="space-y-2">
+                        <li><a href="faq.html" class="text-gray-400 hover:text-neon-saffron transition">FAQ</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-neon-saffron transition">Contact</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-neon-saffron transition">Privacy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-neon-saffron transition">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">CONNECT</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="youtube"></i></a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Subscribe for neon drops and exclusive offers</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2023 Futuristic Fusion. All flavors preserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        feather.replace();
+    </script>
+</body>
+</html>

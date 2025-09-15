@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards | Futuristic Fusion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #f5f5f5;
+        }
+        .cyber-text {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
+        }
+        .glow {
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+        }
+        .glow:hover {
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
+        }
+        .neon-saffron {
+            color: #ff6600;
+        }
+        .bg-neon-saffron {
+            background-color: #ff6600;
+        }
+        .border-neon-saffron {
+            border-color: #ff6600;
+        }
+        .progress-container {
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6600, #ff8c00);
+            transition: width 0.5s ease;
+        }
+        .chilli {
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="bg-black bg-opacity-80 backdrop-blur-md fixed w-full z-50 border-b border-neon-saffron">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="cyber-text text-2xl neon-saffron">FUTURISTIC FUSION</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-neon-saffron transition">Home</a>
+                    <a href="menu.html" class="text-white hover:text-neon-saffron transition">Menu</a>
+                    <a href="rewards.html" class="text-neon-saffron hover:text-neon-saffron transition">Rewards</a>
+                    <a href="about.html" class="text-white hover:text-neon-saffron transition">About</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-neon-saffron text-black px-4 py-2 rounded-full font-bold hover:bg-opacity-90 transition">
+                        Order Now
+                    </button>
+                    <a href="account.html" class="text-white hover:text-neon-saffron">
+                        <i data-feather="user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto mb-12">
+            <h1 class="cyber-text text-4xl md:text-6xl mb-6 neon-saffron">CHILLI REWARDS</h1>
+            <p class="text-xl text-gray-300">Collect 🌶️ with every order and unlock exclusive benefits</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto bg-gray-900 rounded-xl p-8 border border-gray-800 mb-12" data-aos="fade-up">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="cyber-text text-2xl neon-saffron">YOUR STATUS: SPICE NOVICE</h3>
+                    <p class="text-gray-400">15 more  🌶️ to reach next level</p>
+                </div>
+                <div class="text-4xl">
+                    <span class="chilli">🌶️</span>
+                    <span class="chilli" style="animation-delay: 0.2s">🌶️</span>
+                    <span class="chilli" style="animation-delay: 0.4s">🌶️</span>
+                </div>
+            </div>
+            <div class="progress-container mb-2">
+                <div class="progress-bar" style="width: 40%"></div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-400">
+                <span>0  🌶️</span>
+                <span>25 🌶️ for next level</span>
+                <span>100  🌶️</span>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto mb-12">
+            <h2 class="cyber-text text-3xl mb-8 neon-saffron">HOW IT WORKS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-900 p-6 rounded-xl border border-gray-800" data-aos="fade-up">
+                    <div class="text-neon-saffron mb-4">
+                        <i data-feather="shopping-bag" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="cyber-text text-xl mb-3">EARN CHILLIES</h3>
+                    <p class="text-gray-300">Get 1 🌶️ for every ₹100 spent. Bonus  🌶️ for trying new dishes!</p>
+                </div>
+                <div class="bg-gray-900 p-6 rounded-xl border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-neon-saffron mb-4">
+                        <i data-feather="award" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="cyber-text text-xl mb-3">LEVEL UP</h3>
+                    <p class="text-gray-300">Reach new tiers for permanent discounts and exclusive perks.</p>
+                </div>
+                <div class="bg-gray-900 p-6 rounded-xl border border-gray-800" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-neon-saffron mb-4">
+                        <i data-feather="gift" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="cyber-text text-xl mb-3">REDEEM REWARDS</h3>
+                    <p class="text-gray-300">Spend your  🌶️ on discounts, free items, or special experiences.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto mb-12">
+            <h2 class="cyber-text text-3xl mb-8 neon-saffron">REWARD TIERS</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full bg-gray-900 rounded-xl border border-gray-800">
+                    <thead>
+                        <tr class="border-b border-gray-800">
+                            <th class="py-4 px-6 text-left cyber-text neon-saffron">TIER</th>
+                            <th class="py-4 px-6 text-left cyber-text neon-saffron">CHILLIES NEEDED</th>
+                            <th class="py-4 px-6 text-left cyber-text neon-saffron">BENEFITS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800 transition">
+                            <td class="py-4 px-6">
+                                <span class="cyber-text">SPICE NOVICE</span>
+                            </td>
+                            <td class="py-4 px-6">0-24 🌶️</td>
+                            <td class="py-4 px-6">5% off all orders</td>
+                        </tr>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800 transition">
+                            <td class="py-4 px-6">
+                                <span class="cyber-text">HEAT SEEKER</span>
+                            </td>
+                            <td class="py-4 px-6">25-49 🌶️</td>
+                            <td class="py-4 px-6">10% off + free neon chutney</td>
+                        </tr>
+                        <tr class="border-b border-gray-800 hover:bg-gray-800 transition">
+                            <td class="py-4 px-6">
+                                <span class="cyber-text">FIRE WALKER</span>
+                            </td>
+                            <td class="py-4 px-6">50-99 🌶️</td>
+                            <td class="py-4 px-6">15% off + monthly mystery dish</td>
+                        </tr>
+                        <tr class="hover:bg-gray-800 transition">
+                            <td class="py-4 px-6">
+                                <span class="cyber-text">GHOST PEPPER MASTER</span>
+                            </td>
+                            <td class="py-4 px-6">100+ 🌶️</td>
+                            <td class="py-4 px-6">20% off + chef's table experience</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto">
+            <h2 class="cyber-text text-3xl mb-8 neon-saffron">REDEEM YOUR CHILLIES</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-800" data-aos="fade-up">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="cyber-text text-xl">10% OFF NEXT ORDER</h3>
+                        <span class="bg-neon-saffron text-black px-3 py-1 rounded-full text-sm">15  🌶️</span>
+                    </div>
+                    <p class="text-gray-300 mb-6">Get 10% off your next Futuristic Fusion order</p>
+                    <button class="w-full bg-neon-saffron bg-opacity-20 text-neon-saffron px-4 py-2 rounded-full font-bold hover:bg-opacity-30 transition">
+                        REDEEM
+                    </button>
+                </div>
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="cyber-text text-xl">FREE NEON NAN</h3>
+                        <span class="bg-neon-saffron text-black px-3 py-1 rounded-full text-sm">25 🌶️</span>
+                    </div>
+                    <p class="text-gray-300 mb-6">Add a free glowing naan to any order</p>
+                    <button class="w-full bg-neon-saffron bg-opacity-20 text-neon-saffron px-4 py-2 rounded-full font-bold hover:bg-opacity-30 transition">
+                        REDEEM
+                    </button>
+                </div>
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-800" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="cyber-text text-xl">CHEF'S SECRET DISH</h3>
+                        <span class="bg-neon-saffron text-black px-3 py-1 rounded-full text-sm">50 🌶️</span>
+                    </div>
+                    <p class="text-gray-300 mb-6">Try an off-menu creation from our head chef</p>
+                    <button class="w-full bg-neon-saffron bg-opacity-20 text-neon-saffron px-4 py-2 rounded-full font-bold hover:bg-opacity-30 transition">
+                        REDEEM
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-black bg-opacity-80 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="cyber-text text-xl mb-4 neon-saffron">FUTURISTIC FUSION</h3>
+                    <p class="text-gray-400">Where ancient spices meet future tech.</p>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">EXPLORE</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-neon-saffron transition">Home</a></li>
+                        <li><a href="menu.html" class="text-gray-400 hover:text-neon-saffron transition">Menu</a></li>
+                        <li><a href="rewards.html" class="text-gray-400 hover:text-neon-saffron transition">Rewards</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-neon-saffron transition">Our Story</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">HELP</h4>
+                    <ul class="space-y-2">
+                        <li><a href="faq.html" class="text-gray-400 hover:text-neon-saffron transition">FAQ</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-neon-saffron transition">Contact</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-neon-saffron transition">Privacy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-neon-saffron transition">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white mb-4">CONNECT</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-neon-saffron transition"><i data-feather="youtube"></i></a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Subscribe for neon drops and exclusive offers</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2023 Futuristic Fusion. All flavors preserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        feather.replace();
+    </script>
+</body>
+</html>
