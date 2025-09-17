@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Operator-led partner investing in and coaching small tech businesses. We help founders raise aligned capital and accelerate growth.">
+    <meta property="og:image" content="http://static.photos/gradient/1200x630/42">
+    <title>growthSeed | Capital & Coaching for Tech Founders</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 8s ease infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {'background-position': '0% 50%'},
+                            '50%': {'background-position': '100% 50%'},
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+            letter-spacing: 0.01em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Archivo Black', 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-family: 'Archivo Black', 'Manrope', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+            font-size: 2.9rem;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+        h2 {
+            font-size: 2.1rem;
+            line-height: 1.13;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        h3 {
+            font-size: 1.3rem;
+            line-height: 1.18;
+            font-weight: 800;
+        }
+        p, li {
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+        .brand-gradient {
+            background: linear-gradient(90deg, #22c55e 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            /* text-fill-color: transparent; removed for compatibility */
+        }
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-attachment: fixed;
+        }
+        .dark .grid-bg {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-attachment: fixed;
+        }
+        [data-aos="custom-fade"] {
+            opacity: 0;
+            transition-property: opacity;
+        }
+        [data-aos="custom-fade"].aos-animate {
+            opacity: 1;
+        }
+        .animate-gradient {
+            background-size: 300% 300%;
+            background-image: linear-gradient(45deg, #22c55e, #3b82f6, #22c55e);
+            animation: gradient-x 8s ease infinite;
+        }
+        /* Theme toggle reposition for all screens to avoid Apply Now */
+        #themeToggle {
+            top: auto;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            left: auto;
+            border: 2.5px solid #22c55e;
+            box-shadow: 0 2px 16px 0 rgba(34,197,94,0.08);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #themeToggle:focus, #themeToggle:hover {
+            border-color: #16a34a;
+            box-shadow: 0 4px 24px 0 rgba(34,197,94,0.18);
+        }
+        @media (max-width: 640px) {
+            #themeToggle {
+                right: auto;
+                left: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 grid-bg min-h-screen">
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="fixed top-4 right-4 z-50 p-2 rounded-full bg-white dark:bg-gray-800 shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all">
+        <i data-feather="moon" class="hidden dark:block"></i>
+        <i data-feather="sun" class="dark:hidden"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">Growth<span class="text-gray-900 dark:text-white">Seed</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#process" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">Process</a>
+                    <a href="#thesis" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">Thesis</a>
+                    <a href="#team" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">Team</a>
+                    <a href="#faq" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition">FAQ</a>
+                </div>
+                <a href="#apply" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md transition font-medium">Apply Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative">
+            <div class="relative z-10">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-primary-700 dark:text-primary-400 leading-tight" style="letter-spacing:-0.04em;font-family:'Archivo Black','Manrope',ui-sans-serif,sans-serif;" data-aos="fade-up">
+                        <span style="font-family:'Archivo Black', 'Manrope', ui-sans-serif, sans-serif;letter-spacing:-0.06em;" class="block text-primary-600 dark:text-primary-400">GrowthSeed</span>
+                        <span class="block text-gray-900 dark:text-white font-extrabold" style="font-size:2.2rem;letter-spacing:-0.02em;">Capital <span class="text-primary-600 dark:text-primary-400">+</span> Coaching for Tech Founders</span>
+                    </h1>
+                    <p class="mt-6 text-xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto font-semibold" style="font-size:1.25rem;letter-spacing:-0.01em;" data-aos="fade-up" data-aos-delay="100">
+                        We invest in and coach small software businesses. <span class="text-primary-600 dark:text-primary-400 font-bold">Operator-led capital</span> that helps you grow faster.
+                    </p>
+                    <div class="mt-10 flex justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+                        <a href="#apply" class="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md transition font-medium text-lg">
+                            Apply Now
+                        </a>
+                        <a href="#process" class="px-8 py-3 border border-gray-300 dark:border-gray-600 hover:border-primary-600 dark:hover:border-primary-400 text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 rounded-md transition font-medium text-lg">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Down Arrow Button: absolutely positioned at bottom center of hero -->
+            <button 
+                onclick="document.getElementById('process').scrollIntoView({behavior: 'smooth'});" 
+                aria-label="Scroll to next section" 
+                class="absolute left-1/2 transform -translate-x-1/2 bottom-2 md:bottom-6 z-20 rounded-full bg-white/80 dark:bg-gray-800/80 shadow-lg border-4 border-primary-400 hover:border-primary-600 transition-all p-2 md:p-3 group focus:outline-none"
+                style="box-shadow:0 4px 24px 0 rgba(34,197,94,0.10);">
+                <img src="down-arrow.gif" alt="Scroll Down" class="w-8 h-8 md:w-8 md:h-8 group-hover:scale-110 transition-transform" style="min-width:40px;min-height:40px;" />
+            </button>
+        </div>
+        <div class="absolute inset-0 z-0 opacity-20 dark:opacity-10">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-400 to-blue-400 mix-blend-overlay"></div>
+        </div>
+    </section>
+
+    <!-- Logo Cloud -->
+    <section class="py-12 bg-gray-100 dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500 dark:text-gray-400 mb-8">Trusted by founders at</p>
+            <div class="overflow-x-hidden">
+                <div id="logo-marquee" class="flex items-center space-x-16 whitespace-nowrap will-change-transform" style="animation: marquee 32s linear infinite;">
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">StartupX</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">TechFlow</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">CodeCraft</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">DataPulse</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">AppNest</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">CloudForge</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">BitLeap</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">PixelPeak</span>
+                    <!-- Repeat for infinite effect -->
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">StartupX</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">TechFlow</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">CodeCraft</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">DataPulse</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">AppNest</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">CloudForge</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">BitLeap</span>
+                    <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">PixelPeak</span>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            #logo-marquee {
+                min-width: 200%;
+            }
+        </style>
+    </section>
+
+    <!-- Value Props -->
+    <section class="py-20" id="process">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold tracking-tight" data-aos="fade-up">How We Help Founders</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600 dark:text-gray-300" data-aos="fade-up" data-aos-delay="100">
+                    Practical support from operators who've built and scaled before.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center mb-4">
+                        <i data-feather="dollar-sign" class="text-primary-600 dark:text-primary-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Aligned Capital</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Investment structured to support your long-term goals, not just quick exits.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center mb-4">
+                        <i data-feather="trending-up" class="text-primary-600 dark:text-primary-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Growth Coaching</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Hands-on help with GTM, hiring, product strategy from operators who've done it.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center mb-4">
+                        <i data-feather="users" class="text-primary-600 dark:text-primary-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Network Access</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Introductions to customers, partners, and future investors when you need them.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold tracking-tight" data-aos="fade-up">Our Process</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600 dark:text-gray-300" data-aos="fade-up" data-aos-delay="100">
+                    Simple and transparent from first meeting to investment.
+                </p>
+            </div>
+            <div class="relative">
+                <div class="hidden md:block absolute left-8 top-0 h-full w-0.5 bg-gray-300 dark:bg-gray-700"></div>
+                <div class="space-y-8 md:space-y-16">
+                    <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-primary-600 text-white flex items-center justify-center z-10">
+                            <span class="text-xl font-bold">1</span>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-8 flex-1">
+                            <h3 class="text-xl font-semibold">Initial Application</h3>
+                            <p class="mt-2 text-gray-600 dark:text-gray-300">
+                                Complete our short form. We review every submission within 48 hours.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-primary-600 text-white flex items-center justify-center z-10">
+                            <span class="text-xl font-bold">2</span>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-8 flex-1">
+                            <h3 class="text-xl font-semibold">Founder Call</h3>
+                            <p class="mt-2 text-gray-600 dark:text-gray-300">
+                                30-minute video call to understand your business and goals.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-primary-600 text-white flex items-center justify-center z-10">
+                            <span class="text-xl font-bold">3</span>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-8 flex-1">
+                            <h3 class="text-xl font-semibold">Deep Dive</h3>
+                            <p class="mt-2 text-gray-600 dark:text-gray-300">
+                                If aligned, we'll review metrics and discuss potential partnership.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-primary-600 text-white flex items-center justify-center z-10">
+                            <span class="text-xl font-bold">4</span>
+                        </div>
+                        <div class="mt-4 md:mt-0 md:ml-8 flex-1">
+                            <h3 class="text-xl font-semibold">Term Sheet</h3>
+                            <p class="mt-2 text-gray-600 dark:text-gray-300">
+                                If we proceed, you'll receive terms within 1 week of final meeting.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thesis -->
+    <section class="py-20" id="thesis">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="lg:col-span-5 mb-8 lg:mb-0" data-aos="fade-right">
+                    <h2 class="text-3xl font-bold tracking-tight mb-4">Our Investment Thesis</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                        We focus on small software businesses with:
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
+                                    <i data-feather="check" class="text-primary-600 dark:text-primary-400 w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <p class="ml-3 text-gray-600 dark:text-gray-300">$50k-$500k ARR with clear path to $1M+</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
+                                    <i data-feather="check" class="text-primary-600 dark:text-primary-400 w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <p class="ml-3 text-gray-600 dark:text-gray-300">Technical founders who want to stay independent</p>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
+                                    <i data-feather="check" class="text-primary-600 dark:text-primary-400 w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <p class="ml-3 text-gray-600 dark:text-gray-300">Product-market fit with capital efficient growth</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="lg:col-span-7" data-aos="fade-left">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <div class="w-full h-64 md:h-80 bg-gradient-to-br from-primary-100 to-blue-100 dark:from-primary-900/20 dark:to-blue-900/20 rounded-lg flex items-center justify-center">
+                                <div class="text-center p-6">
+                                    <i data-feather="bar-chart-2" class="w-12 h-12 text-primary-600 dark:text-primary-400 mx-auto mb-4"></i>
+                                    <h3 class="text-xl font-semibold mb-2">Typical Investment</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        $250k - $1M initial check<br>
+                                        Follow-on reserves<br>
+                                        12-24 month runway extension
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-primary-600 text-white" id="apply">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight mb-4" data-aos="fade-up">Ready to Grow Together?</h2>
+                <p class="max-w-2xl mx-auto text-primary-100 mb-8" data-aos="fade-up" data-aos-delay="100">
+                    Complete our short application to start the conversation.
+                </p>
+                <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="200">
+                    <form>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white" placeholder="you@example.com">
+                            </div>
+                            <div>
+                                <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Company Name</label>
+                                <input type="text" id="company" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white" placeholder="Your startup">
+                            </div>
+                            <div>
+                                <label for="arr" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Current ARR</label>
+                                <select id="arr" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                                    <option value="">Select range</option>
+                                    <option value="0-50k">$0 - $50k</option>
+                                    <option value="50k-100k">$50k - $100k</option>
+                                    <option value="100k-250k">$100k - $250k</option>
+                                    <option value="250k-500k">$250k - $500k</option>
+                                    <option value="500k+">$500k+</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-md transition font-medium">
+                                    Submit Application
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="py-20" id="team">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold tracking-tight" data-aos="fade-up">Operator-Led Team</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600 dark:text-gray-300" data-aos="fade-up" data-aos-delay="100">
+                    Founders who became investors to help others grow.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 mx-auto mb-4 overflow-hidden">
+                        <img src="http://static.photos/people/200x200/1" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-1">Alex Chen</h3>
+                    <p class="text-primary-600 dark:text-primary-400 text-center mb-4">Founding Partner</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-center">
+                        Ex-founder of SaaS company acquired in 2019. Focus on product-led growth.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 mx-auto mb-4 overflow-hidden">
+                        <img src="http://static.photos/people/200x200/2" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-1">Jamie Rivera</h3>
+                    <p class="text-primary-600 dark:text-primary-400 text-center mb-4">Partner</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-center">
+                        Former engineering leader at high-growth startups. Technical due diligence.
+                    </p>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 mx-auto mb-4 overflow-hidden">
+                        <img src="http://static.photos/people/200x200/3" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-1">Taylor Smith</h3>
+                    <p class="text-primary-600 dark:text-primary-400 text-center mb-4">Venture Partner</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-center">
+                        Ex-CMO scaling to $10M ARR. GTM strategy and marketing operations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800/50" id="faq">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold tracking-tight" data-aos="fade-up">Common Questions</h2>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                    <button class="flex justify-between items-center w-full text-left" aria-expanded="false" aria-controls="faq1">
+                        <h3 class="text-lg font-medium">What types of companies do you invest in?</h3>
+                        <i data-feather="chevron-down" class="text-gray-500 dark:text-gray-400 transition-transform duration-200"></i>
+                    </button>
+                    <div id="faq1" class="hidden mt-4 text-gray-600 dark:text-gray-300">
+                        <p>
+                            We focus on B2B software companies with $50k-$500k in ARR that have found product-market fit and are capital efficient. Our sweet spot is technical founders who want to stay independent and grow sustainably.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                    <button class="flex justify-between items-center w-full text-left" aria-expanded="false" aria-controls="faq2">
+                        <h3 class="text-lg font-medium">How hands-on are you after investing?</h3>
+                        <i data-feather="chevron-down" class="text-gray-500 dark:text-gray-400 transition-transform duration-200"></i>
+                    </button>
+                    <div id="faq2" class="hidden mt-4 text-gray-600 dark:text-gray-300">
+                        <p>
+                            We're as involved as you want us to be. Typical engagement includes quarterly strategy sessions, monthly check-ins, and ad-hoc support when needed. All partners are former operators who can roll up their sleeves.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                    <button class="flex justify-between items-center w-full text-left" aria-expanded="false" aria-controls="faq3">
+                        <h3 class="text-lg font-medium">What's your typical check size?</h3>
+                        <i data-feather="chevron-down" class="text-gray-500 dark:text-gray-400 transition-transform duration-200"></i>
+                    </button>
+                    <div id="faq3" class="hidden mt-4 text-gray-600 dark:text-gray-300">
+                        <p>
+                            Initial investments range from $250k to $1M, with reserves for follow-ons. We aim to provide 12-24 months of runway to hit meaningful milestones.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="400">
+                    <button class="flex justify-between items-center w-full text-left" aria-expanded="false" aria-controls="faq4">
+                        <h3 class="text-lg font-medium">How long does the process take?</h3>
+                        <i data-feather="chevron-down" class="text-gray-500 dark:text-gray-400 transition-transform duration-200"></i>
+                    </button>
+                    <div id="faq4" class="hidden mt-4 text-gray-600 dark:text-gray-300">
+                        <p>
+                            From initial application to term sheet typically takes 2-4 weeks. We move quickly when we find the right fit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 md:p-12 text-center">
+                <h2 class="text-3xl font-bold tracking-tight mb-4" data-aos="fade-up">Let's Build Something Great</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 dark:text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">
+                    Whether you're ready to apply or just want to learn more, we'd love to connect.
+                </p>
+                <div class="flex justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#apply" class="px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-md transition font-medium text-lg">
+                        Apply Now
+                    </a>
+                    <a href="mailto:hello@growthseed.com" class="px-8 py-3 border border-gray-300 dark:border-gray-600 hover:border-primary-600 dark:hover:border-primary-400 text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 rounded-md transition font-medium text-lg">
+                        Email Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <span class="text-2xl font-bold text-white">growth<span class="text-primary-400">Seed</span></span>
+                    <p class="mt-4">
+                        Operator-led capital for tech founders.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-white font-medium mb-4">Navigation</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#process" class="hover:text-primary-400 transition">Process</a></li>
+                        <li><a href="#thesis" class="hover:text-primary-400 transition">Thesis</a></li>
+                        <li><a href="#team" class="hover:text-primary-400 transition">Team</a></li>
+                        <li><a href="#faq" class="hover:text-primary-400 transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-medium mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition">Terms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-medium mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-primary-400 transition">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <a href="#" class="hover:text-primary-400 transition">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                        <a href="#" class="hover:text-primary-400 transition">
+                            <i data-feather="mail"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-sm text-center">
+                <p>© 2023 growthSeed. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            feather.replace();
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('[aria-expanded]').forEach(button => {
+            button.addEventListener('click', function() {
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !expanded);
+                const content = document.getElementById(this.getAttribute('aria-controls'));
+                content.classList.toggle('hidden');
+                
+                const icon = this.querySelector('i');
+                if (expanded) {
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Infinite logo marquee duplication for seamless scroll
+        // (No extra JS needed, handled by CSS keyframes and markup duplication)
+
+        // Initialize animations
+        AOS.init({
+            duration: 600,
+            once: true,
+            offset: 100,
+        });
+
+        // Replace icons
+        feather.replace();
+    </script>
+</body>
+</html>
