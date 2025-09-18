@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormGen AI - Custom Form Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+        }
+        .form-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .chat-bubble {
+            border-radius: 20px 20px 20px 0;
+        }
+        .user-bubble {
+            border-radius: 20px 20px 0 20px;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg text-white">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Hero Section -->
+        <section class="text-center mb-16" data-aos="fade-down">
+            <h1 class="text-5xl font-bold mb-4">FormGen AI</h1>
+            <p class="text-xl opacity-90 mb-8">Generate beautiful, animated login & signup forms with AI</p>
+            <div class="flex justify-center space-x-4">
+                <button id="startChatBtn" class="bg-white text-purple-600 px-6 py-3 rounded-full font-semibold hover:bg-purple-100 transition-all pulse">
+                    Start Creating
+                </button>
+                <button class="border-2 border-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-10 transition-all">
+                    View Examples
+                </button>
+            </div>
+        </section>
+
+        <!-- AI Chat Interface (Hidden by default) -->
+        <div id="chatInterface" class="hidden max-w-3xl mx-auto">
+            <div class="form-card rounded-2xl p-6 shadow-xl mb-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center mr-3">
+                        <i data-feather="cpu" class="text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">FormGen Assistant</h3>
+                </div>
+                
+                <!-- Chat Messages Container -->
+                <div id="chatMessages" class="h-96 overflow-y-auto mb-4 space-y-4 pr-2">
+                    <div class="flex">
+                        <div class="bg-white bg-opacity-20 p-4 chat-bubble max-w-xs">
+                            Hi there! I'm here to help you create the perfect login or signup form. What kind of form would you like to create today?
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Input -->
+                <div class="flex items-center">
+                    <input id="userInput" type="text" placeholder="Describe your form needs..." 
+                        class="flex-1 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-l-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-300 placeholder-white placeholder-opacity-70">
+                    <button id="sendMessageBtn" class="bg-purple-500 hover:bg-purple-600 px-6 py-3 rounded-r-full transition-all">
+                        <i data-feather="send" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Form Preview Section -->
+            <div id="formPreviewSection" class="hidden">
+                <h3 class="text-2xl font-bold mb-6 text-center">Your Form Preview</h3>
+                <div id="formPreview" class="bg-white rounded-xl p-8 shadow-lg text-gray-800 mb-6">
+                    <!-- Generated form will appear here -->
+                </div>
+                <div class="flex justify-center space-x-4">
+                    <button id="downloadBtn" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-semibold transition-all flex items-center">
+                        <i data-feather="download" class="mr-2"></i> Download Code
+                    </button>
+                    <button id="newFormBtn" class="border-2 border-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-10 transition-all">
+                        Create Another
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="mt-24 max-w-6xl mx-auto" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-center mb-12">Why Choose FormGen AI?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl border border-white border-opacity-20">
+                    <div class="w-12 h-12 rounded-full bg-purple-200 flex items-center justify-center mb-4">
+                        <i data-feather="zap" class="text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">AI-Powered</h3>
+                    <p class="opacity-80">Our AI understands your requirements and generates perfect forms tailored to your needs.</p>
+                </div>
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl border border-white border-opacity-20">
+                    <div class="w-12 h-12 rounded-full bg-purple-200 flex items-center justify-center mb-4">
+                        <i data-feather="code" class="text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Clean Code</h3>
+                    <p class="opacity-80">Get production-ready HTML, CSS and JavaScript code that's responsive and accessible.</p>
+                </div>
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl border border-white border-opacity-20">
+                    <div class="w-12 h-12 rounded-full bg-purple-200 flex items-center justify-center mb-4">
+                        <i data-feather="sliders" class="text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Customizable</h3>
+                    <p class="opacity-80">Easily tweak the generated forms to match your brand's look and feel.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Initialize AOS and Feather Icons
+        AOS.init();
+        feather.replace();
+        
+        // Chat functionality
+        document.getElementById('startChatBtn').addEventListener('click', function() {
+            document.getElementById('chatInterface').classList.remove('hidden');
+            this.classList.add('hidden');
+            window.scrollTo({
+                top: document.getElementById('chatInterface').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        });
+        
+        document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (message) {
+                // Add user message to chat
+                addMessage(message, 'user');
+                userInput.value = '';
+                
+                // Simulate AI response after a short delay
+                setTimeout(() => {
+                    const aiResponse = generateAIResponse(message);
+                    addMessage(aiResponse, 'ai');
+                    
+                    // If the conversation seems complete, show the form preview
+                    if (message.toLowerCase().includes('login') || message.toLowerCase().includes('signup')) {
+                        setTimeout(() => {
+                            generateFormPreview();
+                            document.getElementById('formPreviewSection').classList.remove('hidden');
+                            window.scrollTo({
+                                top: document.getElementById('formPreviewSection').offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }, 1000);
+                    }
+                }, 1000);
+            }
+        }
+        
+        function addMessage(message, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('flex');
+            
+            if (sender === 'user') {
+                messageDiv.classList.add('justify-end');
+                messageDiv.innerHTML = `
+                    <div class="bg-purple-500 p-4 user-bubble max-w-xs">
+                        ${message}
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="bg-white bg-opacity-20 p-4 chat-bubble max-w-xs">
+                        ${message}
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function generateAIResponse(userMessage) {
+            const responses = [
+                "Great! I'll help you create a beautiful login form. What color scheme would you like?",
+                "I can generate a signup form with those requirements. Should it include social login buttons?",
+                "That's a nice feature to add. Would you like any animations on form submission?",
+                "Perfect! I'll make sure the form is fully responsive. Any specific styling preferences?",
+                "I can add form validation to ensure users enter correct information. Should I proceed?",
+                "Your form is ready! Here's a preview of what I've generated based on our conversation."
+            ];
+            
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+        
+        function generateFormPreview() {
+            const formPreview = document.getElementById('formPreview');
+            
+            // Generate a sample login form (in a real app, this would be AI-generated)
+            formPreview.innerHTML = `
+                <form class="space-y-6">
+                    <div class="space-y-1">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <input id="email" name="email" type="email" autocomplete="email" required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" 
+                                class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-purple-600 hover:text-purple-500">Forgot password?</a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" 
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                        <div>
+                            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all">
+                                <i data-feather="github" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all">
+                                <i data-feather="twitter" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            feather.replace();
+        }
+        
+        // Download functionality
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // In a real app, this would package the HTML, CSS and JS into a downloadable file
+            alert('Your form code has been downloaded!');
+        });
+        
+        // New form button
+        document.getElementById('newFormBtn').addEventListener('click', function() {
+            document.getElementById('formPreviewSection').classList.add('hidden');
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="flex">
+                    <div class="bg-white bg-opacity-20 p-4 chat-bubble max-w-xs">
+                        Hi there! I'm here to help you create another form. What would you like to build this time?
+                    </div>
+                </div>
+            `;
+            document.getElementById('userInput').focus();
+        });
+    </script>
+</body>
+</html>
