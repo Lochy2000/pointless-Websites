@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetroArcade 2025</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style id="app-style">
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    
+    :root {
+      --primary: #8c52ff;
+      --secondary: #ff5252;
+      --dark: #1a1a2e;
+      --light: #e6e6ff;
+      --accent: #00eeff;
+    }
+    
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background-color: var(--dark);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .neon-text {
+      text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent);
+    }
+    
+    .arcade-btn {
+      position: relative;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 0 rgba(0,0,0,0.5), 0 0 15px rgba(140, 82, 255, 0.3);
+    }
+    
+    .arcade-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.5), 0 0 10px rgba(140, 82, 255, 0.2);
+    }
+    
+    .arcade-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: translateX(-100%);
+    }
+    
+    .arcade-btn:hover::after {
+      transform: translateX(100%);
+      transition: transform 0.5s;
+    }
+    
+    .screen {
+      position: relative;
+      border-radius: 10px;
+      padding: 2px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 20px rgba(140, 82, 255, 0.5);
+    }
+    
+    .screen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation: scanline 3s linear infinite;
+      opacity: 0.5;
+      z-index: 10;
+    }
+    
+    @keyframes scanline {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+    
+    .loading {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--primary);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .game-screen {
+      background-color: #000;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    
+    .joystick-container {
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      z-index: 100;
+    }
+    
+    .joystick {
+      width: 120px;
+      height: 120px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    .joystick-knob {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 10px rgba(140, 82, 255, 0.7);
+    }
+    
+    .action-buttons {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 100;
+    }
+    
+    .action-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(255, 82, 82, 0.7);
+      font-weight: bold;
+    }
+    
+    .high-score-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .high-score-table th,
+    .high-score-table td {
+      padding: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .high-score-table th {
+      text-align: left;
+      color: var(--accent);
+    }
+    
+    .menu-slide {
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .pixel-effect {
+      image-rendering: pixelated;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Container -->
+  <div id="app" class="flex flex-col min-h-screen p-4">
+    
+    <!-- Header Section -->
+    <header class="text-center py-4 mb-6">
+      <h1 class="text-3xl md:text-5xl neon-text animate__animated animate__fadeIn">RetroArcade 2025</h1>
+      <p class="mt-2 text-xs md:text-sm opacity-80">Classic games with a futuristic twist</p>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main class="flex-1">
+      <!-- Home Screen -->
+      <div id="home-screen" class="flex flex-col items-center justify-center space-y-8">
+        <div class="w-full max-w-md px-4">
+          <button id="play-classics-btn" class="arcade-btn bg-gradient-to-r from-purple-600 to-blue-600 text-white w-full py-6 rounded-lg text-xl md:text-2xl mb-6 transition-all hover:from-purple-700 hover:to-blue-700">
+            <i class="fas fa-gamepad mr-2"></i> Play Classics
+          </button>
+          
+          <button id="generate-game-btn" class="arcade-btn bg-gradient-to-r from-red-600 to-orange-600 text-white w-full py-6 rounded-lg text-xl md:text-2xl transition-all hover:from-red-700 hover:to-orange-700">
+            <i class="fas fa-magic mr-2"></i> Generate New Game
+          </button>
+        </div>
+        
+        <div class="mt-12 text-sm opacity-70 text-center max-w-md">
+          <p>Tap a button to start your arcade experience!</p>
+          <p class="mt-2 text-xs">Your games and high scores are saved locally</p>
+        </div>
+      </div>
+      
+      <!-- Genre Selection Screen -->
+      <div id="genre-screen" class="hidden fade-in">
+        <div class="flex justify-between items-center mb-6">
+          <button class="back-btn text-white p-2 rounded-full">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <h2 class="text-xl neon-text" id="genre-title">Select Genre</h2>
+          <div class="w-8"></div> <!-- Spacer for alignment -->
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
+          <button class="genre-btn arcade-btn bg-blue-700 text-white p-4 rounded-lg hover:bg-blue-600 transition" data-genre="platformer">
+            <div class="flex flex-col items-center">
+              <i class="fas fa-running text-2xl mb-2"></i>
+              <span>Platformer</span>
+            </div>
+          </button>
+          
+          <button class="genre-btn arcade-btn bg-red-700 text-white p-4 rounded-lg hover:bg-red-600 transition" data-genre="shooter">
+            <div class="flex flex-col items-center">
+              <i class="fas fa-meteor text-2xl mb-2"></i>
+              <span>Shooter</span>
+            </div>
+          </button>
+          
+          <button class="genre-btn arcade-btn bg-green-700 text-white p-4 rounded-lg hover:bg-green-600 transition" data-genre="puzzle">
+            <div class="flex flex-col items-center">
+              <i class="fas fa-puzzle-piece text-2xl mb-2"></i>
+              <span>Puzzle</span>
+            </div>
+          </button>
+          
+          <button class="genre-btn arcade-btn bg-purple-700 text-white p-4 rounded-lg hover:bg-purple-600 transition" data-genre="beatem">
+            <div class="flex flex-col items-center">
+              <i class="fas fa-fist-raised text-2xl mb-2"></i>
+              <span>Beat 'em up</span>
+            </div>
+          </button>
+          
+          <button class="genre-btn arcade-btn bg-yellow-600 text-white p-4 rounded-lg hover:bg-yellow-500 transition" data-genre="racing">
+            <div class="flex flex-col items-center">
+              <i class="fas fa-flag-checkered text-2xl mb-2"></i>
+              <span>Racing</span>
+            </div>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Game List Screen -->
+      <div id="game-list-screen" class="hidden fade-in">
+        <div class="flex justify-between items-center mb-6">
+          <button class="back-btn text-white p-2 rounded-full">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <h2 class="text-xl neon-text" id="game-list-title">Select Game</h2>
+          <div class="w-8"></div> <!-- Spacer for alignment -->
+        </div>
+        
+        <div id="games-container" class="space-y-4 max-w-md mx-auto">
+          <!-- Game items will be populated here -->
+        </div>
+      </div>
+      
+      <!-- Generate Game Screen -->
+      <div id="generate-game-screen" class="hidden fade-in">
+        <div class="flex justify-between items-center mb-6">
+          <button class="back-btn text-white p-2 rounded-full">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <h2 class="text-xl neon-text">Generate New Game</h2>
+          <div class="w-8"></div> <!-- Spacer for alignment -->
+        </div>
+        
+        <div class="max-w-md mx-auto">
+          <div class="mb-6">
+            <label class="block text-sm mb-2">Select Genre:</label>
+            <select id="generate-genre" class="bg-gray-900 text-white w-full p-3 rounded-lg border border-gray-700">
+              <option value="platformer">Platformer</option>
+              <option value="shooter">Shooter</option>
+              <option value="puzzle">Puzzle</option>
+              <option value="beatem">Beat 'em up</option>
+              <option value="racing">Racing</option>
+            </select>
+          </div>
+          
+          <div class="mb-6">
+            <label class="block text-sm mb-2">Difficulty:</label>
+            <div class="flex">
+              <button class="difficulty-btn flex-1 py-2 bg-blue-800" data-difficulty="easy">Easy</button>
+              <button class="difficulty-btn flex-1 py-2 bg-blue-700" data-difficulty="medium">Medium</button>
+              <button class="difficulty-btn flex-1 py-2 bg-blue-600" data-difficulty="hard">Hard</button>
+            </div>
+          </div>
+          
+          <button id="create-game-btn" class="arcade-btn bg-gradient-to-r from-purple-600 to-pink-600 text-white w-full py-4 rounded-lg text-lg transition-all hover:from-purple-700 hover:to-pink-700">
+            <i class="fas fa-lightbulb mr-2"></i> Create Game
+          </button>
+        </div>
+      </div>
+      
+      <!-- Loading Screen -->
+      <div id="loading-screen" class="hidden fade-in flex flex-col items-center justify-center h-full">
+        <span class="loading mb-6"></span>
+        <p id="loading-message" class="text-center">Generating your custom game...</p>
+      </div>
+      
+      <!-- Game Screen -->
+      <div id="game-screen" class="hidden fade-in">
+        <div class="game-top-bar bg-gray-900 p-2 flex justify-between items-center mb-2 rounded-lg">
+          <div>
+            <span id="game-title" class="text-sm">Game Title</span>
+          </div>
+          <div>
+            <span id="game-score" class="text-sm">Score: 0</span>
+          </div>
+          <div class="flex space-x-2">
+            <button id="pause-btn" class="text-white p-1 rounded">
+              <i class="fas fa-pause"></i>
+            </button>
+            <button id="menu-btn" class="text-white p-1 rounded">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="screen">
+          <div class="game-screen w-full">
+            <iframe id="game-iframe" class="w-full h-full" frameborder="0"></iframe>
+          </div>
+        </div>
+        
+        <!-- Joystick Controls -->
+        <div class="joystick-container hidden">
+          <div class="joystick">
+            <div class="joystick-knob"></div>
+          </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons hidden">
+          <div class="flex">
+            <button class="action-btn bg-red-600">A</button>
+            <button class="action-btn bg-blue-600">B</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pause Modal -->
+      <div id="pause-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+        <div class="bg-gray-900 p-6 rounded-lg max-w-sm w-full mx-4">
+          <h3 class="text-xl mb-6 text-center neon-text">Paused</h3>
+          <div class="space-y-4">
+            <button id="resume-btn" class="arcade-btn bg-blue-700 text-white w-full py-3 rounded-lg hover:bg-blue-600 transition">
+              <i class="fas fa-play mr-2"></i> Resume
+            </button>
+            <button id="save-exit-btn" class="arcade-btn bg-purple-700 text-white w-full py-3 rounded-lg hover:bg-purple-600 transition">
+              <i class="fas fa-save mr-2"></i> Save & Exit
+            </button>
+            <button id="high-scores-btn" class="arcade-btn bg-green-700 text-white w-full py-3 rounded-lg hover:bg-green-600 transition">
+              <i class="fas fa-trophy mr-2"></i> High Scores
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- High Scores Modal -->
+      <div id="high-scores-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
+        <div class="bg-gray-900 p-6 rounded-lg max-w-sm w-full mx-4">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl neon-text">High Scores</h3>
+            <button id="close-high-scores" class="text-white">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <div class="high-scores-container max-h-60 overflow-y-auto">
+            <table class="high-score-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Score</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="high-scores-list">
+                <!-- High scores will be populated here -->
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="mt-4 text-center">
+            <button id="back-to-pause" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+    
+    <!-- Footer Section -->
+    <footer class="py-4 text-center text-xs opacity-60">
+      <p>&copy; 2025 RetroArcade 2025 - All rights reserved</p>
+    </footer>
+    
+  </div>
+
+  <script id="app-script">
+    // Game data
+    const classicGames = {
+      platformer: [
+        { id: 'p1', title: 'Super Jump Quest', description: 'Classic platforming adventure with 8 worlds to conquer', thumbnail: 'https://cdn.pixabay.com/photo/2017/09/08/20/29/chess-2730034_960_720.jpg' },
+        { id: 'p2', title: 'Pixel Runner', description: 'Run, jump and collect coins across dangerous terrain', thumbnail: 'https://cdn.pixabay.com/photo/2013/07/12/15/24/pacman-149704_960_720.png' },
+        { id: 'p3', title: 'Cave Explorer', description: 'Navigate mysterious caves filled with treasures and traps', thumbnail: 'https://cdn.pixabay.com/photo/2016/04/01/09/11/boy-1299608_960_720.png' }
+      ],
+      shooter: [
+        { id: 's1', title: 'Space Invaders X', description: 'Defend Earth from waves of alien attackers', thumbnail: 'https://cdn.pixabay.com/photo/2017/02/10/14/08/space-invaders-2055100_960_720.png' },
+        { id: 's2', title: 'Galactic Defender', description: 'Fast-paced space shooter with power-ups', thumbnail: 'https://cdn.pixabay.com/photo/2016/09/10/15/50/space-shooter-1659666_960_720.jpg' },
+        { id: 's3', title: 'Robot Wars', description: 'Battle robots in a post-apocalyptic world', thumbnail: 'https://cdn.pixabay.com/photo/2013/07/12/15/36/robot-150559_960_720.png' }
+      ],
+      puzzle: [
+        { id: 'pz1', title: 'Block Breaker', description: 'Classic block-matching puzzle game with 100 levels', thumbnail: 'https://cdn.pixabay.com/photo/2014/04/02/10/55/tetris-304772_960_720.png' },
+        { id: 'pz2', title: 'Memory Masters', description: 'Test your memory with increasing challenges', thumbnail: 'https://cdn.pixabay.com/photo/2016/03/31/19/19/card-1294962_960_720.png' },
+        { id: 'pz3', title: 'Logic Labyrinth', description: 'Mind-bending puzzles that test your logical thinking', thumbnail: 'https://cdn.pixabay.com/photo/2014/04/03/00/39/labyrinth-309038_960_720.png' }
+      ],
+      beatem: [
+        { id: 'b1', title: 'Street Brawler', description: 'Classic side-scrolling fighting game with 8 unique fighters', thumbnail: 'https://cdn.pixabay.com/photo/2017/08/01/11/48/blue-2564660_960_720.jpg' },
+        { id: 'b2', title: 'Kung Fu Masters', description: 'Master various martial arts styles to defeat your enemies', thumbnail: 'https://cdn.pixabay.com/photo/2014/04/03/10/45/karate-311106_960_720.png' },
+        { id: 'b3', title: 'Ninja Revenge', description: 'Fast-paced ninja combat with stealth elements', thumbnail: 'https://cdn.pixabay.com/photo/2013/07/13/09/25/ninja-155852_960_720.png' }
+      ],
+      racing: [
+        { id: 'r1', title: 'Retro Racers', description: 'Race through 20 tracks with various 8-bit vehicles', thumbnail: 'https://cdn.pixabay.com/photo/2013/07/13/11/26/car-158089_960_720.png' },
+        { id: 'r2', title: 'Turbo Challenge', description: 'High-speed arcade racing with nitro boosts', thumbnail: 'https://cdn.pixabay.com/photo/2014/04/03/10/29/car-310542_960_720.png' },
+        { id: 'r3', title: 'Pixel Grand Prix', description: 'Championship racing with vehicle upgrades', thumbnail: 'https://cdn.pixabay.com/photo/2017/01/31/17/10/car-2025663_960_720.png' }
+      ]
+    };
+
+    // High scores stored in localStorage
+    function getHighScores(gameId) {
+      const scores = JSON.parse(localStorage.getItem('highScores')) || {};
+      return scores[gameId] || [];
+    }
+
+    function saveHighScore(gameId, score) {
+      const allScores = JSON.parse(localStorage.getItem('highScores')) || {};
+      const gameScores = allScores[gameId] || [];
+      
+      // Add new score
+      gameScores.push({
+        score: score,
+        date: new Date().toISOString().split('T')[0]
+      });
+      
+      // Sort and limit to top 10
+      gameScores.sort((a, b) => b.score - a.score);
+      allScores[gameId] = gameScores.slice(0, 10);
+      
+      localStorage.setItem('highScores', JSON.stringify(allScores));
+    }
+
+    // Navigation system
+    function showScreen(screenId) {
+      // Hide all screens
+      document.querySelectorAll('main > div').forEach(screen => {
+        screen.classList.add('hidden');
+      });
+      
+      // Show requested screen
+      document.getElementById(screenId).classList.remove('hidden');
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show home screen by default
+      showScreen('home-screen');
+      
+      // Event: Play Classics Button
+      document.getElementById('play-classics-btn').addEventListener('click', function() {
+        document.getElementById('genre-title').textContent = 'Select Classic Genre';
+        showScreen('genre-screen');
+        window.currentMode = 'classics';
+      });
+      
+      // Event: Generate Game Button
+      document.getElementById('generate-game-btn').addEventListener('click', function() {
+        showScreen('generate-game-screen');
+        window.currentMode = 'generate';
+      });
+      
+      // Event: Back Buttons
+      document.querySelectorAll('.back-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          if (this.closest('#genre-screen')) {
+            showScreen('home-screen');
+          } else if (this.closest('#game-list-screen')) {
+            showScreen('genre-screen');
+          } else if (this.closest('#generate-game-screen')) {
+            showScreen('home-screen');
+          } else if (this.closest('#game-screen')) {
+            showScreen('game-list-screen');
+          }
+        });
+      });
+      
+      // Event: Genre Buttons
+      document.querySelectorAll('.genre-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const genre = this.dataset.genre;
+          window.currentGenre = genre;
+          
+          if (window.currentMode === 'classics') {
+            document.getElementById('game-list-title').textContent = `Select ${genre.charAt(0).toUpperCase() + genre.slice(1)} Game`;
+            
+            // Populate game list
+            const gamesContainer = document.getElementById('games-container');
+            gamesContainer.innerHTML = '';
+            
+            classicGames[genre].forEach(game => {
+              const gameItem = document.createElement('div');
+              gameItem.className = 'game-item bg-gray-800 rounded-lg overflow-hidden flex items-center hover:bg-gray-700 transition cursor-pointer';
+              gameItem.dataset.gameId = game.id;
+              
+              gameItem.innerHTML = `
+                <div class="w-24 h-24 overflow-hidden flex-shrink-0">
+                  <img src="${game.thumbnail}" alt="${game.title}" class="w-full h-full object-cover pixel-effect">
+                </div>
+                <div class="p-4">
+                  <h3 class="text-md font-bold">${game.title}</h3>
+                  <p class="text-xs text-gray-400 mt-1">${game.description}</p>
+                </div>
+              `;
+              
+              gameItem.addEventListener('click', function() {
+                loadGame(game.id, game.title);
+              });
+              
+              gamesContainer.appendChild(gameItem);
+            });
+            
+            showScreen('game-list-screen');
+          }
+        });
+      });
+      
+      // Event: Create Game Button
+      document.getElementById('create-game-btn').addEventListener('click', function() {
+        const selectedGenre = document.getElementById('generate-genre').value;
+        const difficulty = document.querySelector('.difficulty-btn.selected')?.dataset.difficulty || 'medium';
+        
+        // Show loading screen
+        document.getElementById('loading-message').textContent = `Generating your custom ${selectedGenre} game...`;
+        showScreen('loading-screen');
+        
+        // Simulate generating a game (will be replaced with API call)
+        setTimeout(() => {
+          const generatedGameId = `gen-${selectedGenre}-${Date.now()}`;
+          loadGame(generatedGameId, `AI Generated ${selectedGenre.charAt(0).toUpperCase() + selectedGenre.slice(1)} Game`);
+        }, 3000);
+      });
+      
+      // Event: Difficulty Buttons
+      document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('selected', 'ring', 'ring-white'));
+          this.classList.add('selected', 'ring', 'ring-white');
+        });
+      });
+      
+      // Default select medium difficulty
+      document.querySelector('[data-difficulty="medium"]').classList.add('selected', 'ring', 'ring-white');
+      
+      // Event: Pause Button
+      document.getElementById('pause-btn').addEventListener('click', function() {
+        document.getElementById('pause-modal').classList.remove('hidden');
+      });
+      
+      // Event: Resume Button
+      document.getElementById('resume-btn').addEventListener('click', function() {
+        document.getElementById('pause-modal').classList.add('hidden');
+      });
+      
+      // Event: Save & Exit Button
+      document.getElementById('save-exit-btn').addEventListener('click', function() {
+        document.getElementById('pause-modal').classList.add('hidden');
+        showScreen('home-screen');
+      });
+      
+      // Event: High Scores Button
+      document.getElementById('high-scores-btn').addEventListener('click', function() {
+        // Load high scores for current game
+        const gameId = window.currentGameId;
+        const scores = getHighScores(gameId);
+        
+        const highScoresList = document.getElementById('high-scores-list');
+        highScoresList.innerHTML = '';
+        
+        if (scores.length === 0) {
+          highScoresList.innerHTML = '<tr><td colspan="3" class="text-center">No high scores yet!</td></tr>';
+        } else {
+          scores.forEach((score, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${index + 1}</td>
+              <td>${score.score}</td>
+              <td>${score.date}</td>
+            `;
+            highScoresList.appendChild(row);
+          });
+        }
+        
+        document.getElementById('pause-modal').classList.add('hidden');
+        document.getElementById('high-scores-modal').classList.remove('hidden');
+      });
+      
+      // Event: Close High Scores
+      document.getElementById('close-high-scores').addEventListener('click', function() {
+        document.getElementById('high-scores-modal').classList.add('hidden');
+      });
+      
+      // Event: Back to Pause
+      document.getElementById('back-to-pause').addEventListener('click', function() {
+        document.getElementById('high-scores-modal').classList.add('hidden');
+        document.getElementById('pause-modal').classList.remove('hidden');
+      });
+    });
+
+    // Function to load a game
+    function loadGame(gameId, gameTitle) {
+      window.currentGameId = gameId;
+      
+      // Update game title
+      document.getElementById('game-title').textContent = gameTitle;
+      document.getElementById('game-score').textContent = 'Score: 0';
+      
+      // In a real implementation, we would load the game in the iframe
+      // For now, we'll just show a placeholder
+      const iframe = document.getElementById('game-iframe');
+      
+      if (gameId.startsWith('gen-')) {
+        // This would be generated content
+        iframe.srcdoc = `
+          <html>
+            <head>
+              <style>
+                body {
+                  margin: 0;
+                  overflow: hidden;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                  background-color: black;
+                  color: white;
+                  font-family: 'Press Start 2P', cursive;
+                  text-align: center;
+                  padding: 20px;
+                }
+              </style>
+            </head>
+            <body>
+              <div>
+                <h2>AI Generated Game</h2>
+                <p>This is a prototype. The full version will include dynamically generated games.</p>
+              </div>
+            </body>
+          </html>
+        `;
+      } else {
+        // This would be a classic game
+        iframe.srcdoc = `
+          <html>
+            <head>
+              <style>
+                body {
+                  margin: 0;
+                  overflow: hidden;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                  background-color: black;
+                  color: white;
+                  font-family: 'Press Start 2P', cursive;
+                  text-align: center;
+                  padding: 20px;
+                }
+              </style>
+            </head>
+            <body>
+              <div>
+                <h2>${gameTitle}</h2>
+                <p>This is a prototype. The full version will include actual playable games.</p>
+              </div>
+            </body>
+          </html>
+        `;
+      }
+      
+      // Show controls for mobile
+      if (window.innerWidth < 768) {
+        document.querySelector('.joystick-container').classList.remove('hidden');
+        document.querySelector('.action-buttons').classList.remove('hidden');
+      }
+      
+      // Show the game screen
+      showScreen('game-screen');
+    }
+  </script>
+</body>
+</html>
