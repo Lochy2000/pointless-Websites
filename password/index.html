@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LockMaster Pro - Secure Password Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="index.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <!-- ============================================================================ -->
+    <!-- SETUP SCREEN - First Time Setup -->
+    <!-- ============================================================================ -->
+    <div id="setup-screen" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-xl shadow-2xl p-8 max-w-md w-full border border-gray-700">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
+                    <i data-feather="lock" class="w-8 h-8 text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+                    Welcome to LockMaster Pro
+                </h1>
+                <p class="text-gray-400">Create your master password to get started</p>
+            </div>
+
+            <form id="setup-form" class="space-y-4">
+                <div>
+                    <label for="setup-password" class="block text-sm font-medium mb-2">Master Password</label>
+                    <input
+                        type="password"
+                        id="setup-password"
+                        required
+                        minlength="8"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Enter master password (min 8 characters)"
+                    >
+                </div>
+
+                <div>
+                    <label for="setup-confirm" class="block text-sm font-medium mb-2">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="setup-confirm"
+                        required
+                        minlength="8"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Confirm master password"
+                    >
+                </div>
+
+                <div class="bg-yellow-900/30 border border-yellow-700 rounded-lg p-4 text-sm text-yellow-300">
+                    <div class="flex items-start">
+                        <i data-feather="alert-triangle" class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <strong>Important:</strong> Remember this password! It cannot be recovered. All your passwords will be encrypted with this master password.
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+                >
+                    <i data-feather="shield" class="mr-2"></i>
+                    Create Master Password
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- LOGIN SCREEN -->
+    <!-- ============================================================================ -->
+    <div id="login-screen" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-xl shadow-2xl p-8 max-w-md w-full border border-gray-700">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
+                    <i data-feather="lock" class="w-8 h-8 text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+                    LockMaster Pro
+                </h1>
+                <p class="text-gray-400">Enter your master password to unlock</p>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                <div>
+                    <label for="login-password" class="block text-sm font-medium mb-2">Master Password</label>
+                    <input
+                        type="password"
+                        id="login-password"
+                        required
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder="Enter your master password"
+                        autofocus
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+                >
+                    <i data-feather="unlock" class="mr-2"></i>
+                    Unlock
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- MAIN APP -->
+    <!-- ============================================================================ -->
+    <div id="main-app" class="hidden min-h-screen">
+        <!-- Header with Navigation -->
+        <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-40">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex items-center justify-between gap-4">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2 flex-shrink-0">
+                        <i data-feather="lock" class="text-primary w-6 h-6"></i>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden sm:block">
+                            LockMaster Pro
+                        </h1>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="flex-1 max-w-md">
+                        <div class="relative">
+                            <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                            <input
+                                type="text"
+                                id="search-passwords"
+                                placeholder="Search passwords..."
+                                class="w-full pl-9 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Right Side Navigation -->
+                    <div class="flex items-center space-x-2 flex-shrink-0">
+                        <!-- Category Dropdown -->
+                        <div class="relative">
+                            <button id="category-dropdown-btn" class="flex items-center space-x-2 px-3 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-sm">
+                                <i data-feather="folder" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline" id="selected-category-name">All</span>
+                                <i data-feather="chevron-down" class="w-4 h-4"></i>
+                            </button>
+                            <div id="category-dropdown" class="hidden absolute right-0 mt-2 w-56 bg-gray-800 rounded-lg shadow-xl border border-gray-700 py-2 z-50">
+                                <div class="px-3 py-2 border-b border-gray-700 flex justify-between items-center">
+                                    <span class="text-xs font-semibold text-gray-400">CATEGORIES</span>
+                                    <button id="add-category-btn" class="text-primary hover:text-blue-400 transition-colors" title="Add Category">
+                                        <i data-feather="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                <div id="category-list" class="max-h-80 overflow-y-auto">
+                                    <!-- Categories will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Theme Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-700 transition-colors">
+                            <i data-feather="moon" class="w-4 h-4"></i>
+                        </button>
+
+                        <!-- Lock Button -->
+                        <button id="lock-btn" class="p-2 rounded-lg hover:bg-gray-700 transition-colors text-red-400 hover:text-red-300" title="Lock App">
+                            <i data-feather="log-out" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container mx-auto px-4 py-6">
+            <!-- Password Generator Section (Compact & Horizontal) -->
+            <div class="bg-gray-800 rounded-xl shadow-lg p-4 mb-6 border border-gray-700">
+                <div class="flex items-center justify-between mb-3">
+                    <button id="toggle-generator" class="flex items-center space-x-2 text-lg font-semibold hover:text-primary transition-colors">
+                        <i data-feather="key" class="text-primary"></i>
+                        <span>Password Generator</span>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform" id="generator-chevron"></i>
+                    </button>
+                    <button id="add-password-manual" class="flex items-center space-x-2 px-4 py-2 bg-secondary hover:bg-green-600 text-white text-sm font-medium rounded-lg transition-colors">
+                        <i data-feather="plus" class="w-4 h-4"></i>
+                        <span>Add Password</span>
+                    </button>
+                </div>
+
+                <div id="generator-content" class="space-y-4">
+                    <!-- Mode Toggle -->
+                    <div class="flex items-center space-x-4 pb-3 border-b border-gray-700">
+                        <button id="mode-generate" class="mode-btn active px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i data-feather="refresh-cw" class="w-4 h-4 inline mr-1"></i>
+                            Generate
+                        </button>
+                        <button id="mode-manual" class="mode-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i data-feather="edit" class="w-4 h-4 inline mr-1"></i>
+                            Manual Entry
+                        </button>
+                    </div>
+
+                    <!-- Generate Mode -->
+                    <div id="generate-mode-content" class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                            <!-- Length Slider -->
+                            <div class="md:col-span-3">
+                                <label class="text-xs text-gray-400 mb-1 block">Length: <span id="length-value" class="text-white font-semibold">16</span></label>
+                                <input type="range" id="password-length" min="8" max="32" value="16" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                            </div>
+
+                            <!-- Options Dropdown -->
+                            <div class="md:col-span-3 relative">
+                                <button id="options-dropdown-btn" class="w-full flex items-center justify-between px-3 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors text-sm">
+                                    <span class="flex items-center">
+                                        <i data-feather="settings" class="w-4 h-4 mr-2"></i>
+                                        Options
+                                    </span>
+                                    <i data-feather="chevron-down" class="w-4 h-4"></i>
+                                </button>
+                                <div id="options-dropdown" class="hidden absolute left-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-xl border border-gray-700 p-3 z-50">
+                                    <div class="space-y-2">
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="uppercase" checked class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded">
+                                            <span class="ml-2 text-sm">Uppercase (A-Z)</span>
+                                        </label>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="lowercase" checked class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded">
+                                            <span class="ml-2 text-sm">Lowercase (a-z)</span>
+                                        </label>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="numbers" checked class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded">
+                                            <span class="ml-2 text-sm">Numbers (0-9)</span>
+                                        </label>
+                                        <label class="flex items-center cursor-pointer">
+                                            <input type="checkbox" id="symbols" checked class="w-4 h-4 text-primary bg-gray-700 border-gray-600 rounded">
+                                            <span class="ml-2 text-sm">Symbols (!@#$%)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password Display -->
+                            <div class="md:col-span-4 relative">
+                                <input type="text" id="generated-password" readonly class="w-full px-3 py-2 pr-10 bg-gray-700 border border-gray-600 rounded-lg font-mono text-sm">
+                                <button id="copy-password" class="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-primary transition-colors">
+                                    <i data-feather="copy" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="md:col-span-2 flex gap-2">
+                                <button id="generate-password" class="flex-1 bg-primary hover:bg-blue-600 text-white font-medium py-2 px-3 rounded-lg transition-colors text-sm flex items-center justify-center">
+                                    <i data-feather="refresh-cw" class="w-4 h-4 mr-1"></i>
+                                    Generate
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Strength Indicator -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-gray-400 whitespace-nowrap">Strength:</span>
+                            <div class="flex-1 bg-gray-700 rounded-full h-2">
+                                <div id="strength-indicator" class="h-2 rounded-full bg-gray-700 transition-all"></div>
+                            </div>
+                            <span id="strength-text" class="text-xs font-medium whitespace-nowrap min-w-[80px]"></span>
+                        </div>
+                    </div>
+
+                    <!-- Manual Mode -->
+                    <div id="manual-mode-content" class="hidden space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                            <div class="md:col-span-10">
+                                <label class="text-xs text-gray-400 mb-1 block">Enter your password</label>
+                                <input type="text" id="manual-password-input" placeholder="Type your password here..." class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg font-mono text-sm focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="md:col-span-2">
+                                <button id="use-manual-password" class="w-full bg-secondary hover:bg-green-600 text-white font-medium py-2 px-3 rounded-lg transition-colors text-sm">
+                                    Use Password
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password List Section (Collapsible) -->
+            <div class="bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+                <div class="p-4 border-b border-gray-700">
+                    <button id="toggle-passwords" class="flex items-center justify-between w-full text-left">
+                        <div class="flex items-center space-x-2 text-lg font-semibold">
+                            <i data-feather="shield" class="text-primary"></i>
+                            <span>Your Passwords</span>
+                            <span class="text-sm font-normal text-gray-400" id="password-count">(0)</span>
+                        </div>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform" id="passwords-chevron"></i>
+                    </button>
+                </div>
+                <div id="passwords-content" class="p-6">
+                    <div id="passwords-container">
+                        <!-- Password cards will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================ -->
+    <!-- PASSWORD MODAL -->
+    <!-- ============================================================================ -->
+    <div id="password-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full border border-gray-700 max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-gray-800 border-b border-gray-700 p-6 flex justify-between items-center">
+                <h2 id="modal-title" class="text-2xl font-bold text-white">Save Password</h2>
+                <button id="close-modal" class="text-gray-400 hover:text-white transition-colors">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <form id="password-form" class="p-6 space-y-4">
+                <div>
+                    <label for="pwd-name" class="block text-sm font-medium mb-2">
+                        Name / Title <span class="text-red-400">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="pwd-name"
+                        required
+                        placeholder="e.g., Gmail Account, Facebook, Bank Login"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                </div>
+
+                <div>
+                    <label for="pwd-website" class="block text-sm font-medium mb-2">Website / URL</label>
+                    <input
+                        type="url"
+                        id="pwd-website"
+                        placeholder="https://example.com"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                </div>
+
+                <div>
+                    <label for="pwd-username" class="block text-sm font-medium mb-2">Username / Email</label>
+                    <input
+                        type="text"
+                        id="pwd-username"
+                        placeholder="user@example.com"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                </div>
+
+                <div>
+                    <label for="pwd-password" class="block text-sm font-medium mb-2">
+                        Password <span class="text-red-400">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="pwd-password"
+                        required
+                        placeholder="Enter password"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent font-mono"
+                    >
+                </div>
+
+                <div>
+                    <label for="pwd-category" class="block text-sm font-medium mb-2">Category</label>
+                    <select
+                        id="pwd-category"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    >
+                        <!-- Categories populated dynamically -->
+                    </select>
+                </div>
+
+                <div>
+                    <label for="pwd-notes" class="block text-sm font-medium mb-2">Notes</label>
+                    <textarea
+                        id="pwd-notes"
+                        rows="3"
+                        placeholder="Additional notes (optional)"
+                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                    ></textarea>
+                </div>
+
+                <div class="flex space-x-3 pt-4">
+                    <button
+                        type="submit"
+                        class="flex-1 bg-primary hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+                    >
+                        <i data-feather="save" class="mr-2"></i>
+                        Save Password
+                    </button>
+                    <button
+                        type="button"
+                        id="cancel-password"
+                        class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

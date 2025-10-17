@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindspace Navigator - 3D Environment Selector</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Import Map for Three.js ES Modules -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Loading Environments</h2>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loading-progress"></div>
+            </div>
+            <p id="loading-text">Initializing...</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i data-lucide="layout-grid"></i>
+                    <h1>Mindspace Navigator</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="favorites-btn" title="View Favorites">
+                        <i data-lucide="heart"></i>
+                    </button>
+                    <button class="icon-btn" id="info-btn" title="About">
+                        <i data-lucide="info"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Gallery View -->
+        <div id="gallery-view" class="view-container">
+            <div class="gallery-intro">
+                <h2>Choose Your Environment</h2>
+                <p>Select a space that matches your current mood and workflow</p>
+            </div>
+
+            <div class="scene-grid" id="scene-grid">
+                <!-- Scene cards will be dynamically generated here -->
+            </div>
+        </div>
+
+        <!-- Immersive View -->
+        <div id="immersive-view" class="view-container hidden">
+            <div class="immersive-canvas" id="immersive-canvas"></div>
+
+            <!-- Immersive Controls -->
+            <div class="immersive-controls">
+                <button class="control-btn back-btn" id="back-btn">
+                    <i data-lucide="arrow-left"></i>
+                    <span>Back to Gallery</span>
+                </button>
+
+                <div class="scene-info-panel">
+                    <h2 id="current-scene-title">Scene Title</h2>
+                    <p id="current-scene-description">Scene description</p>
+                    <div class="scene-tags" id="current-scene-tags"></div>
+                </div>
+
+                <button class="control-btn favorite-btn" id="favorite-toggle">
+                    <i data-lucide="heart"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <button class="nav-arrow nav-prev" id="nav-prev">
+                <i data-lucide="chevron-left"></i>
+            </button>
+            <button class="nav-arrow nav-next" id="nav-next">
+                <i data-lucide="chevron-right"></i>
+            </button>
+
+            <!-- Keyboard Hint -->
+            <div class="keyboard-hint">
+                Press <kbd>ESC</kbd> to exit • <kbd>←</kbd> <kbd>→</kbd> to navigate
+            </div>
+        </div>
+
+        <!-- Info Modal -->
+        <div id="info-modal" class="modal hidden">
+            <div class="modal-content">
+                <button class="modal-close" id="close-info-modal">
+                    <i data-lucide="x"></i>
+                </button>
+                <h2>About Mindspace Navigator</h2>
+                <p>An immersive 3D environment selector designed to enhance your workflow and mindset.</p>
+                <ul>
+                    <li><strong>Explore</strong> - Click on any environment to enter immersive mode</li>
+                    <li><strong>Navigate</strong> - Use mouse to rotate and zoom scenes in 3D</li>
+                    <li><strong>Favorite</strong> - Click the heart icon to save your preferred spaces</li>
+                    <li><strong>Keyboard</strong> - Use ESC to exit, arrow keys to navigate between scenes</li>
+                </ul>
+                <div class="tech-stack">
+                    <h3>Built With</h3>
+                    <p>Three.js • GSAP • Modern CSS • Vanilla JavaScript</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1E293B;
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Animation for password generation */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+.animate-pulse-once {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* Category button active state */
+.category-btn.active {
+    background-color: #374151;
+    border-left: 3px solid #3B82F6;
+    padding-left: calc(1rem - 3px);
+}
+
+/* Password card hover effect */
+.password-card {
+    transition: all 0.2s ease-in-out;
+}
+
+.password-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal backdrop animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#password-modal:not(.hidden) {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Fade in animation for password cards */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.password-card {
+    animation: slideUp 0.3s ease-out;
+}
+
+/* Range slider styling */
+input[type="range"] {
+    accent-color: #3B82F6;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    background: #3B82F6;
+}
+
+input[type="range"]::-moz-range-thumb {
+    background: #3B82F6;
+}
+
+/* Checkbox styling */
+input[type="checkbox"]:checked {
+    background-color: #3B82F6;
+    border-color: #3B82F6;
+}
+
+/* Loading state */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading {
+    animation: spin 1s linear infinite;
+}
+
+/* Toast notification animation */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Mode button styling */
+.mode-btn {
+    color: #9CA3AF;
+    background-color: transparent;
+}
+
+.mode-btn.active {
+    color: #FFFFFF;
+    background-color: #374151;
+}
+
+.mode-btn:hover {
+    background-color: #374151;
+}
+
+/* Category button active state in dropdown */
+.category-btn.active {
+    background-color: #374151;
+    color: #3B82F6;
+}
+
+.category-btn:hover {
+    background-color: #374151;
+}
+
+/* Rotate chevron animation */
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* Dropdown styles */
+#category-dropdown, #options-dropdown {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Smooth transitions */
+#generator-content, #passwords-content {
+    transition: all 0.3s ease-in-out;
+}
+
+#generator-chevron, #passwords-chevron {
+    transition: transform 0.3s ease;
+}
+
+/* Grid responsive fixes */
+@media (max-width: 768px) {
+    .md\:col-span-3, .md\:col-span-4, .md\:col-span-2, .md\:col-span-10 {
+        grid-column: span 12;
+    }
+}
+
+/* Responsive improvements */
+@media (max-width: 1024px) {
+    .lg\:col-span-1, .lg\:col-span-3 {
+        grid-column: span 1;
+    }
+}
+
+/* Better mobile nav */
+@media (max-width: 640px) {
+    header .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}

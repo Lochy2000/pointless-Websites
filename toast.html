@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Toast Lab</title>
+<style>
+/* ===== Base / Theme ===== */
+*{box-sizing:border-box}
+:root{
+  color-scheme: dark;
+  --bg: radial-gradient(1200px 800px at 10% -10%, #9ae6ff22, transparent 40%),
+        radial-gradient(1000px 600px at 110% 10%, #b3ffcf22, transparent 45%),
+        linear-gradient(180deg, #0e1116, #0a0c10);
+  --panel: rgba(255,255,255,0.08);
+  --panel-2: rgba(255,255,255,0.12);
+  --border: rgba(255,255,255,0.18);
+  --text: #e9eef5;
+  --muted: #b7c0cc;
+
+  --ring: #6bb8ff;
+  --ok-bg: hsl(143 85% 16% / .15);   --ok: hsl(140 90% 65%);
+  --er-bg: hsl(359 85% 16% / .18);   --er: hsl(359 90% 70%);
+  --wa-bg: hsl(49 85% 16% / .18);    --wa: hsl(45 100% 70%);
+  --in-bg: hsl(208 85% 16% / .18);   --in: hsl(208 90% 70%);
+  --no-bg: rgba(255,255,255,.08);    --no: #e9eef5;
+
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Inter", "SF Pro Text", Arial, sans-serif;
+  color:var(--text);
+  background:var(--bg) fixed;
+  letter-spacing:.2px;
+}
+.page{min-height:100%;padding:clamp(16px,3vw,32px);display:grid;gap:20px}
+
+/* Header */
+.header{text-align:center;margin:8px 0 2px}
+.header h1{margin:0 0 6px;font-weight:700;letter-spacing:.4px}
+.sub{margin:0;color:var(--muted);font-size:.98rem}
+
+/* Card */
+.card{
+  margin:0 auto; width:min(920px,100%);
+  background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+  backdrop-filter: blur(10px) saturate(1.15); -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  box-shadow:var(--shadow);
+  padding:clamp(16px,3vw,28px);
+}
+
+/* Form grid */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 18px;align-items:end}
+.span-2{grid-column:span 2}
+.row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted)}
+
+/* Fields */
+.field label{display:block;font-size:.85rem;color:var(--muted);margin:0 0 6px}
+.field input[type="text"], .field select, .field input[type="range"]{
+  width:100%;border-radius:12px;border:1px solid var(--border);
+  background:var(--panel-2);color:var(--text);padding:12px 14px;outline:none;
+  transition:border .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.field input[type="text"]::placeholder{color:#97a3b3}
+.field input[type="text"]:focus, .field select:focus, .field input[type="range"]:focus{
+  border-color:var(--ring);
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
+}
+/* dark select popup help */
+select, option{background-color:#0e1116;color:#e9eef5}
+
+/* Range */
+input[type="range"]{appearance:none;height:36px;background:transparent;padding:0 4px}
+input[type="range"]::-webkit-slider-runnable-track{height:6px;border-radius:999px;background:linear-gradient(90deg,#5ca2ff,#b1e3ff)}
+input[type="range"]::-webkit-slider-thumb{
+  appearance:none;width:18px;height:18px;border-radius:50%;
+  background:#fff;border:2px solid #5ca2ff;margin-top:-6px;box-shadow:0 4px 12px rgba(0,0,0,.35)
+}
+input[type="range"]::-moz-range-track{height:6px;border-radius:999px;background:linear-gradient(90deg,#5ca2ff,#b1e3ff)}
+input[type="range"]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #5ca2ff;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+
+/* Buttons */
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  appearance:none;border:1px solid var(--border);background:var(--panel-2);
+  color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;
+  transition:transform .06s ease, background .2s ease, border-color .2s ease;
+}
+.btn:hover{background:rgba(255,255,255,.16)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:linear-gradient(180deg,#6bb8ff,#4f92ff);color:#051327;border-color:#8ec8ff;font-weight:600}
+.btn.subtle{background:rgba(255,255,255,.08)}
+.btn.sm{padding:8px 10px;border-radius:10px;font-size:.9rem}
+
+/* Toasts */
+.toast-container{
+  position:fixed;display:flex;flex-direction:column;gap:10px;z-index:9999;
+  pointer-events:none;
+}
+.tc-left-top{top:18px;left:18px;align-items:flex-start}
+.tc-left-bottom{bottom:18px;left:18px;align-items:flex-start}
+.tc-right-top{top:18px;right:18px;align-items:flex-end}
+.tc-right-bottom{bottom:18px;right:18px;align-items:flex-end}
+
+.toast{
+  --bgc:var(--no-bg); --fg:var(--no);
+  backdrop-filter:blur(8px) saturate(1.1); -webkit-backdrop-filter:blur(8px) saturate(1.1);
+  background:var(--bgc); color:var(--fg); border:1px solid var(--border);
+  box-shadow:var(--shadow); border-radius:14px; padding:12px 12px 12px 10px;
+  min-width:260px; max-width:min(420px,90vw);
+  display:grid; grid-template-columns:12px 1fr auto; gap:10px; align-items:center;
+  pointer-events:auto; transform:translateZ(0); animation:pop .14s ease-out;
+}
+@keyframes pop{from{transform:scale(.98);opacity:0}to{transform:scale(1);opacity:1}}
+.toast .dot{width:8px;height:8px;border-radius:99px;background:var(--fg);opacity:.9;box-shadow:0 0 0 4px color-mix(in oklab, var(--fg) 20%, transparent)}
+.toast .toast-message{line-height:1.35}
+.toast .remove{all:unset;cursor:pointer;padding:2px 6px;line-height:1;color:color-mix(in oklab, var(--fg) 60%, #fff);border-radius:8px}
+.toast .remove:hover{background:rgba(255,255,255,.08)}
+.toast.success{--bgc:var(--ok-bg);--fg:var(--ok)}
+.toast.error{--bgc:var(--er-bg);--fg:var(--er)}
+.toast.warning{--bgc:var(--wa-bg);--fg:var(--wa)}
+.toast.info{--bgc:var(--in-bg);--fg:var(--in)}
+.tc-left-top .toast,.tc-left-bottom .toast{animation:slideInL .2s ease-out, pop .14s ease-out}
+.tc-right-top .toast,.tc-right-bottom .toast{animation:slideInR .2s ease-out, pop .14s ease-out}
+@keyframes slideInL{from{transform:translateX(-14px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideInR{from{transform:translateX(14px);opacity:0}to{transform:translateX(0);opacity:1}}
+.fade-out-left{animation:fadeOutL .18s ease-in forwards}
+.fade-out-right{animation:fadeOutR .18s ease-in forwards}
+@keyframes fadeOutL{to{transform:translateX(-16px);opacity:0}}
+@keyframes fadeOutR{to{transform:translateX(16px);opacity:0}}
+
+/* Code Modal */
+.hidden{display:none !important}
+.backdrop{
+  position:fixed; inset:0; z-index:10000; display:grid; place-items:center;
+  background:rgba(0,0,0,.45); animation:fadeIn .15s ease-out;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.code-modal{
+  width:min(900px,92vw); max-height:85vh; overflow:hidden;
+  background:var(--panel); border:1px solid var(--border); border-radius:16px;
+  backdrop-filter:blur(10px) saturate(1.15); -webkit-backdrop-filter:blur(10px) saturate(1.15);
+  box-shadow:var(--shadow);
+  display:grid; grid-template-rows:auto auto 1fr;
+}
+.cm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.06)}
+.cm-actions{display:flex;gap:8px}
+.tabs{display:flex;gap:6px;padding:8px;border-bottom:1px dashed var(--border)}
+.tab{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 12px;cursor:pointer}
+.tab.active{background:rgba(255,255,255,.16)}
+.panes{overflow:auto}
+.pane{display:none;margin:0}
+.pane.active{display:block}
+.pane code{display:block;padding:14px;white-space:pre;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92rem;line-height:1.45}
+
+/* Responsive */
+@media (max-width:640px){
+  .grid{grid-template-columns:1fr}
+  .span-2{grid-column:1}
+}
+</style>
+</head>
+<body>
+  <!-- App -->
+  <div class="page">
+    <header class="header">
+      <h1>Toast Lab</h1>
+      <p class="sub">Test different toast styles, positions, and timings.</p>
+    </header>
+
+    <section class="card">
+      <form class="grid" id="controls" autocomplete="off">
+        <div class="field">
+          <label for="message">Message</label>
+          <input type="text" id="message" placeholder="This is a toast message!" value="This is a toast message!" />
+        </div>
+
+        <div class="field">
+          <label for="type">Type</label>
+          <select id="type">
+            <option value="normal">Normal</option>
+            <option value="success">Success</option>
+            <option value="error">Error</option>
+            <option value="warning">Warning</option>
+            <option value="info">Info</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="horizontal-position">Horizontal</label>
+          <select id="horizontal-position">
+            <option value="left">Left</option>
+            <option value="right" selected>Right</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="vertical-position">Vertical</label>
+          <select id="vertical-position">
+            <option value="top" selected>Top</option>
+            <option value="bottom">Bottom</option>
+          </select>
+        </div>
+
+        <div class="field span-2">
+          <label for="duration" class="row">
+            <span>Duration</span>
+            <span class="mono"><output id="duration-output">5</output>s</span>
+          </label>
+          <input type="range" id="duration" min="3" max="10" value="5" />
+        </div>
+
+        <div class="actions span-2">
+          <button type="button" class="btn primary" id="show-toast">Show Toast</button>
+          <button type="button" class="btn subtle" id="open-code">Show code</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <!-- Toast Mounts -->
+  <div class="toast-container tc-left-top"></div>
+  <div class="toast-container tc-left-bottom"></div>
+  <div class="toast-container tc-right-top"></div>
+  <div class="toast-container tc-right-bottom"></div>
+
+  <!-- Template -->
+  <template id="toast-template">
+    <div class="toast">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="toast-message"></span>
+      <button class="remove" aria-label="Dismiss">&times;</button>
+    </div>
+  </template>
+
+  <!-- Code Modal -->
+  <div class="backdrop hidden" id="code-modal" aria-hidden="true">
+    <div class="code-modal" role="dialog" aria-modal="true" aria-labelledby="cm-title">
+      <div class="cm-head">
+        <strong id="cm-title">Toast code</strong>
+        <div class="cm-actions">
+          <button class="btn subtle sm" id="copy-tab">Copy</button>
+          <button class="btn primary sm" id="copy-all">Copy all</button>
+          <button class="btn subtle sm" id="close-code" aria-label="Close">✕</button>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Code tabs">
+        <button class="tab active" data-tab="html" role="tab" aria-selected="true">HTML</button>
+        <button class="tab" data-tab="css" role="tab" aria-selected="false">CSS</button>
+        <button class="tab" data-tab="js" role="tab" aria-selected="false">JS</button>
+      </div>
+
+      <div class="panes">
+        <pre class="pane active"><code id="code-html"></code></pre>
+        <pre class="pane"><code id="code-css"></code></pre>
+        <pre class="pane"><code id="code-js"></code></pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== Element refs =====
+  const horizontalPositionEl = document.getElementById('horizontal-position');
+  const verticalPositionEl   = document.getElementById('vertical-position');
+  const toastTypeEl          = document.getElementById('type');
+  const toastMessageEl       = document.getElementById('message');
+  const showToastButtonEl    = document.getElementById('show-toast');
+  const durationEl           = document.getElementById('duration');
+  const durationOpEl         = document.getElementById('duration-output');
+
+  const leftTopContainer     = document.querySelector('.tc-left-top');
+  const leftBottomContainer  = document.querySelector('.tc-left-bottom');
+  const rightTopContainer    = document.querySelector('.tc-right-top');
+  const rightBottomContainer = document.querySelector('.tc-right-bottom');
+  const toastTemplate        = document.getElementById('toast-template');
+
+  const openCodeBtn          = document.getElementById('open-code');
+  const backdrop             = document.getElementById('code-modal');
+  const closeBtn             = document.getElementById('close-code');
+  const copyTabBtn           = document.getElementById('copy-tab');
+  const copyAllBtn           = document.getElementById('copy-all');
+  const tabButtons           = [...document.querySelectorAll('.tab')];
+  const panes                = {
+    html: document.getElementById('code-html'),
+    css:  document.getElementById('code-css'),
+    js:   document.getElementById('code-js')
+  };
+
+  // Ensure modal is hidden on page load
+  backdrop.classList.add('hidden');
+  backdrop.setAttribute('aria-hidden', 'true');
+
+  // ===== Controls wiring =====
+  const syncButtonState = () => {
+    showToastButtonEl.disabled = toastMessageEl.value.trim().length === 0;
+  };
+  syncButtonState();
+  durationOpEl.textContent = durationEl.value;
+
+  toastMessageEl.addEventListener('input', syncButtonState);
+  durationEl.addEventListener('input', () => durationOpEl.textContent = durationEl.value);
+
+  showToastButtonEl.addEventListener('click', () => {
+    const message = toastMessageEl.value.trim();
+    if (!message) return;
+
+    const type       = toastTypeEl.value;
+    const horizontal = horizontalPositionEl.value;
+    const vertical   = verticalPositionEl.value;
+    const durationMs = +durationEl.value * 1000;
+
+    showToast(message, type, durationMs, horizontal, vertical);
+  });
+
+  // ===== Toast API =====
+  window.showToast = function showToast(
+    message,
+    type = 'normal',
+    duration = 5000,
+    horizontal = 'right',
+    vertical = 'top'
+  ){
+    const node = createToast(message, type, duration, horizontal);
+
+    if (horizontal === 'left') {
+      if (vertical === 'top') leftTopContainer.prepend(node);
+      else leftBottomContainer.append(node);
+    } else {
+      if (vertical === 'top') rightTopContainer.prepend(node);
+      else rightBottomContainer.append(node);
+    }
+  };
+
+  function createToast(message, type, duration, horizontal){
+    const frag = toastTemplate.content.cloneNode(true);
+    const el = frag.querySelector('.toast');
+    const msgEl = frag.querySelector('.toast-message');
+    const closeBtn = frag.querySelector('.remove');
+
+    msgEl.textContent = String(message ?? '');
+    if (type && type !== 'normal') el.classList.add(type);
+
+    const timer = setTimeout(remove, duration);
+    closeBtn.addEventListener('click', remove);
+
+    function remove(){
+      clearTimeout(timer);
+      el.classList.add(horizontal === 'left' ? 'fade-out-left' : 'fade-out-right');
+      setTimeout(() => el.remove(), 180);
+    }
+    return frag;
+  }
+
+  // ===== Code Modal =====
+  openCodeBtn.addEventListener('click', () => {
+    const { html, css, js } = buildAllSnippets();
+    panes.html.textContent = html;
+    panes.css.textContent  = css;
+    panes.js.textContent   = js;
+    setActiveTab('html');
+    backdrop.classList.remove('hidden');
+    backdrop.setAttribute('aria-hidden', 'false');
+  });
+
+  closeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    hideModal();
+  });
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      e.preventDefault();
+      hideModal();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !backdrop.classList.contains('hidden')) {
+      e.preventDefault();
+      hideModal();
+    }
+  });
+
+  function hideModal(){
+    backdrop.classList.add('hidden');
+    backdrop.setAttribute('aria-hidden', 'true');
+  }
+
+  tabButtons.forEach(btn => btn.addEventListener('click', () => setActiveTab(btn.dataset.tab)));
+  
+  function setActiveTab(name){
+    tabButtons.forEach(b => {
+      b.classList.toggle('active', b.dataset.tab === name);
+      b.setAttribute('aria-selected', b.dataset.tab === name ? 'true' : 'false');
+    });
+    const panesEls = document.querySelectorAll('.pane');
+    panesEls.forEach((p, i) => {
+      const key = ['html','css','js'][i];
+      p.classList.toggle('active', key === name);
+    });
+  }
+
+  copyTabBtn.addEventListener('click', () => {
+    const active = document.querySelector('.tab.active')?.dataset.tab || 'html';
+    copy(panes[active].textContent);
+  });
+  copyAllBtn.addEventListener('click', () => {
+    const all = [
+      '<!-- HTML -->\n' + panes.html.textContent,
+      '/* CSS */\n'     + panes.css.textContent,
+      '// JS\n'         + panes.js.textContent
+    ].join('\n\n');
+    copy(all);
+  });
+
+  function copy(text){
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).then(feedback, fallback);
+    } else { fallback(); }
+    function fallback(){
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy'); ta.remove(); feedback();
+    }
+    function feedback(){
+      const original = copyTabBtn.textContent;
+      copyTabBtn.textContent = 'Copied ✓';
+      setTimeout(() => (copyTabBtn.textContent = original), 900);
+    }
+  }
+
+  // ===== Snippet builders =====
+  function buildAllSnippets(){
+    const msg  = escapeForSingleQuoted(document.getElementById('message').value.trim() || '');
+    const type = document.getElementById('type').value;
+    const dur  = +document.getElementById('duration').value * 1000;
+    const h    = document.getElementById('horizontal-position').value;
+    const v    = document.getElementById('vertical-position').value;
+
+    const html = `<!-- Mounts for the four corners -->
+<div class="toast-container tc-left-top"></div>
+<div class="toast-container tc-left-bottom"></div>
+<div class="toast-container tc-right-top"></div>
+<div class="toast-container tc-right-bottom"></div>
+
+<!-- Template for a single toast -->
+<template id="toast-template">
+  <div class="toast">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="toast-message"></span>
+    <button class="remove" aria-label="Dismiss">&times;</button>
+  </div>
+</template>`;
+
+    const css = `/* Minimal styling for toasts (glassy, dark-friendly) */
+:root{
+  color-scheme: dark;
+  --border: rgba(255,255,255,.18);
+  --no-bg: rgba(255,255,255,.08); --no: #e9eef5;
+  --ok-bg: hsl(143 85% 16% / .15); --ok: hsl(140 90% 65%);
+  --er-bg: hsl(359 85% 16% / .18); --er: hsl(359 90% 70%);
+  --wa-bg: hsl(49 85% 16% / .18);  --wa: hsl(45 100% 70%);
+  --in-bg: hsl(208 85% 16% / .18); --in: hsl(208 90% 70%);
+}
+
+/* containers */
+.toast-container{ position: fixed; display: flex; flex-direction: column; gap:10px; z-index: 9999; pointer-events:none; }
+.tc-left-top{ top:18px; left:18px; align-items:flex-start; }
+.tc-left-bottom{ bottom:18px; left:18px; align-items:flex-start; }
+.tc-right-top{ top:18px; right:18px; align-items:flex-end; }
+.tc-right-bottom{ bottom:18px; right:18px; align-items:flex-end; }
+
+/* toast */
+.toast{
+  --bgc: var(--no-bg); --fg: var(--no);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  background: var(--bgc); color: var(--fg);
+  border: 1px solid var(--border); border-radius: 14px;
+  padding: 12px; min-width: 260px; max-width: min(420px,90vw);
+  display:grid; grid-template-columns:12px 1fr auto; gap:10px; align-items:center;
+  pointer-events:auto; animation: pop .14s ease-out;
+}
+@keyframes pop{ from{ transform:scale(.98); opacity:0 } to{ transform:scale(1); opacity:1 } }
+.toast .dot{ width:8px; height:8px; border-radius:99px; background:var(--fg); opacity:.9; box-shadow:0 0 0 4px color-mix(in oklab, var(--fg) 20%, transparent); }
+.toast .remove{ all:unset; cursor:pointer; padding:2px 6px; border-radius:8px; color:color-mix(in oklab, var(--fg) 60%, #fff); }
+.toast .remove:hover{ background:rgba(255,255,255,.08); }
+
+/* variants */
+.toast.success{ --bgc: var(--ok-bg); --fg: var(--ok); }
+.toast.error{ --bgc: var(--er-bg); --fg: var(--er); }
+.toast.warning{ --bgc: var(--wa-bg); --fg: var(--wa); }
+.toast.info{ --bgc: var(--in-bg); --fg: var(--in); }
+
+/* enter/exit */
+.tc-left-top .toast, .tc-left-bottom .toast{ animation: slideInL .2s ease-out, pop .14s ease-out; }
+.tc-right-top .toast, .tc-right-bottom .toast{ animation: slideInR .2s ease-out, pop .14s ease-out; }
+@keyframes slideInL{ from{ transform:translateX(-14px); opacity:0 } to{ transform:translateX(0); opacity:1 } }
+@keyframes slideInR{ from{ transform:translateX(14px); opacity:0 } to{ transform:translateX(0); opacity:1 } }
+.fade-out-left{ animation: fadeOutL .18s ease-in forwards }
+.fade-out-right{ animation: fadeOutR .18s ease-in forwards }
+@keyframes fadeOutL{ to{ transform:translateX(-16px); opacity:0 } }
+@keyframes fadeOutR{ to{ transform:translateX(16px); opacity:0 } }`;
+
+    const js = `/* Toast utility: defines window.showToast and uses the template + mounts */
+(function(){
+  function ensure(){
+    const defs = [
+      ['tc-left-top','toast-container tc-left-top'],
+      ['tc-left-bottom','toast-container tc-left-bottom'],
+      ['tc-right-top','toast-container tc-right-top'],
+      ['tc-right-bottom','toast-container tc-right-bottom']
+    ];
+    defs.forEach(([cls, full])=>{
+      if(!document.querySelector('.'+cls)){
+        const d=document.createElement('div'); d.className=full; document.body.appendChild(d);
+      }
+    });
+    if(!document.getElementById('toast-template')){
+      const t=document.createElement('template'); t.id='toast-template';
+      t.innerHTML='<div class="toast"><span class="dot" aria-hidden="true"></span><span class="toast-message"></span><button class="remove" aria-label="Dismiss">&times;</button></div>';
+      document.body.appendChild(t);
+    }
+  }
+
+  window.showToast = window.showToast || function(message, type='normal', duration=5000, horizontal='right', vertical='top'){
+    ensure();
+    const tpl=document.getElementById('toast-template');
+    const frag=tpl.content.cloneNode(true);
+    const el=frag.querySelector('.toast');
+    const msgEl=frag.querySelector('.toast-message');
+    const close=frag.querySelector('.remove');
+
+    msgEl.textContent=String(message ?? '');
+    if(type && type!=='normal') el.classList.add(type);
+
+    const timer=setTimeout(remove,duration);
+    close.addEventListener('click', remove);
+
+    function remove(){ clearTimeout(timer); el.classList.add(horizontal==='left'?'fade-out-left':'fade-out-right'); setTimeout(()=>el.remove(),180); }
+
+    const target = horizontal==='left'
+      ? (vertical==='top'?document.querySelector('.tc-left-top'):document.querySelector('.tc-left-bottom'))
+      : (vertical==='top'?document.querySelector('.tc-right-top'):document.querySelector('.tc-right-bottom'));
+
+    (vertical==='top'?target.prepend:target.append)(frag);
+  };
+
+  // Example using current selections:
+  showToast('${msg}', '${type}', ${dur}, '${h}', '${v}');
+})();`;
+
+    return { html, css, js };
+  }
+
+  function escapeForSingleQuoted(str){
+    return str.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n');
+  }
+});
+</script>
+</body>
+</html>

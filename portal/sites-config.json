@@ -1,0 +1,150 @@
+{
+  "sites": [
+    {
+      "id": "password-manager",
+      "name": "LockMaster Pro",
+      "description": "Secure password manager with AES encryption",
+      "url": "../password/index.html",
+      "category": "Tools",
+      "color": "#3B82F6",
+      "gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    },
+    {
+      "id": "mindspace-3d",
+      "name": "Mindspace Navigator",
+      "description": "Interactive 3D environment selector",
+      "url": "../3d/index.html",
+      "category": "3D/Creative",
+      "color": "#8B5CF6",
+      "gradient": "linear-gradient(135deg, #667eea 0%, #f093fb 100%)"
+    },
+    {
+      "id": "ai-form-generator",
+      "name": "AI Form Generator",
+      "description": "Generate forms with artificial intelligence",
+      "url": "../ai/ai-form-generator/index.html",
+      "category": "AI",
+      "color": "#10B981",
+      "gradient": "linear-gradient(135deg, #0ba360 0%, #3cba92 100%)"
+    },
+    {
+      "id": "crypto-dashboard",
+      "name": "Crypto Dashboard",
+      "description": "Real-time cryptocurrency analytics",
+      "url": "../dashboards/crypto/index.html",
+      "category": "Dashboards",
+      "color": "#F59E0B",
+      "gradient": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+    },
+    {
+      "id": "retro-emulator",
+      "name": "Retro Emulator",
+      "description": "Classic game emulator experience",
+      "url": "../game/retro-emulator/index.html",
+      "category": "Games",
+      "color": "#EF4444",
+      "gradient": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
+    },
+    {
+      "id": "neon-dragon",
+      "name": "Neon Dragon",
+      "description": "Modern restaurant landing page",
+      "url": "../reastraunts/neonDragon.html",
+      "category": "Restaurants",
+      "color": "#EC4899",
+      "gradient": "linear-gradient(135deg, #ff0844 0%, #ffb199 100%)"
+    },
+    {
+      "id": "futuristic-fusion",
+      "name": "Futuristic Fusion",
+      "description": "Contemporary dining experience",
+      "url": "../reastraunts/fustristicfusion/index.html",
+      "category": "Restaurants",
+      "color": "#F472B6",
+      "gradient": "linear-gradient(135deg, #fccb90 0%, #d57eeb 100%)"
+    },
+    {
+      "id": "ascend-tech",
+      "name": "Ascend",
+      "description": "Tech investment and growth platform",
+      "url": "../tech/ascend/index.html",
+      "category": "Tech/Business",
+      "color": "#06B6D4",
+      "gradient": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+    },
+    {
+      "id": "growth-seed",
+      "name": "Growth Seed",
+      "description": "Business growth and consulting",
+      "url": "../tech/growthSeed/index.html",
+      "category": "Tech/Business",
+      "color": "#14B8A6",
+      "gradient": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
+    },
+    {
+      "id": "portfolio-site",
+      "name": "Portfolio Site",
+      "description": "Professional developer portfolio",
+      "url": "../tech/portfolioSite/index.html",
+      "category": "Tech/Business",
+      "color": "#6366F1",
+      "gradient": "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)"
+    },
+    {
+      "id": "real-estate",
+      "name": "Real Estate Portal",
+      "description": "Property listings and search",
+      "url": "../realastate/index.html",
+      "category": "Real Estate",
+      "color": "#8B5CF6",
+      "gradient": "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)"
+    }
+  ],
+  "categories": [
+    {
+      "name": "All",
+      "icon": "grid",
+      "color": "#6B7280"
+    },
+    {
+      "name": "Tools",
+      "icon": "wrench",
+      "color": "#3B82F6"
+    },
+    {
+      "name": "Games",
+      "icon": "gamepad",
+      "color": "#EF4444"
+    },
+    {
+      "name": "Dashboards",
+      "icon": "bar-chart",
+      "color": "#F59E0B"
+    },
+    {
+      "name": "Restaurants",
+      "icon": "utensils",
+      "color": "#EC4899"
+    },
+    {
+      "name": "Real Estate",
+      "icon": "home",
+      "color": "#8B5CF6"
+    },
+    {
+      "name": "Tech/Business",
+      "icon": "briefcase",
+      "color": "#06B6D4"
+    },
+    {
+      "name": "AI",
+      "icon": "cpu",
+      "color": "#10B981"
+    },
+    {
+      "name": "3D/Creative",
+      "icon": "box",
+      "color": "#8B5CF6"
+    }
+  ]
+}
