@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween Theme Switcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Cinzel:wght@400;600;700;900&family=Spectral:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Blood Moon Theme (Default) */
+            --primary-color: #DC143C;
+            --secondary-color: #8B0000;
+            --accent-color: #FF1744;
+            --bg-dark: #000000;
+            --bg-medium: #0A0A0A;
+            --bg-light: #1C1C1C;
+            --text-light: #E8E8E8;
+            --text-muted: #A0A0A0;
+            --glow-color: rgba(220, 20, 60, 0.6);
+            --theme-name: 'Blood Moon';
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-medium) 50%, var(--bg-light) 100%);
+            color: var(--text-light);
+            font-family: 'Cinzel', serif;
+            transition: all 0.5s ease;
+        }
+
+        /* ============================================
+           THEME SWITCHER COMPONENT
+           ============================================ */
+
+        .theme-switcher {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow:
+                0 10px 30px var(--glow-color),
+                inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            animation: pulse 3s infinite;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 15px 40px var(--glow-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 30px var(--glow-color), inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 0 15px 50px var(--glow-color), inset 0 2px 10px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .theme-menu {
+            position: absolute;
+            top: 80px;
+            right: 0;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.98));
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--primary-color);
+            border-radius: 16px;
+            padding: 20px;
+            min-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 60px var(--glow-color);
+        }
+
+        .theme-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-menu h3 {
+            font-family: 'Creepster', cursive;
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .theme-option {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-option:hover {
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .theme-option.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(90deg, var(--primary-color)20, transparent);
+            box-shadow: inset 0 0 20px var(--glow-color);
+        }
+
+        .theme-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--text-light);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        .theme-info {
+            flex: 1;
+        }
+
+        .theme-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .theme-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'Spectral', serif;
+        }
+
+        /* Demo Content */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .hero h1 {
+            font-family: 'Creepster', cursive;
+            font-size: 96px;
+            color: var(--primary-color);
+            text-shadow:
+                0 0 20px var(--glow-color),
+                0 0 40px var(--glow-color),
+                3px 3px 0 #000;
+            margin-bottom: 20px;
+            animation: flicker 4s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 20px var(--glow-color),
+                    0 0 40px var(--glow-color),
+                    3px 3px 0 #000;
+            }
+            20%, 24%, 55% {
+                text-shadow: 3px 3px 0 #000;
+            }
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--text-muted);
+            font-family: 'Spectral', serif;
+            font-style: italic;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.95));
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px var(--glow-color);
+        }
+
+        .card h3 {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-family: 'Spectral', serif;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px var(--glow-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--glow-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="theme-toggle" id="themeToggle">🎃</button>
+
+        <div class="theme-menu" id="themeMenu">
+            <h3>Choose Your Curse</h3>
+
+            <div class="theme-option active" data-theme="blood">
+                <div class="theme-color" style="background: linear-gradient(135deg, #DC143C, #8B0000);"></div>
+                <div class="theme-info">
+                    <h4>Blood Moon</h4>
+                    <p>Crimson shadows and vampire vibes</p>
+                </div>
+            </div>
+
+            <div class="theme-option" data-theme="toxic">
+                <div class="theme-color" style="background: linear-gradient(135deg, #39FF14, #0A4);"></div>
+                <div class="theme-info">
+                    <h4>Toxic Waste</h4>
+                    <p>Radioactive green nightmare</p>
+                </div>
+            </div>
+
+            <div class="theme-option" data-theme="mystic">
+                <div class="theme-color" style="background: linear-gradient(135deg, #8B5CF6, #6B46C1);"></div>
+                <div class="theme-info">
+                    <h4>Mystic Void</h4>
+                    <p>Purple arcane magic</p>
+                </div>
+            </div>
+
+            <div class="theme-option" data-theme="frost">
+                <div class="theme-color" style="background: linear-gradient(135deg, #06B6D4, #0891B2);"></div>
+                <div class="theme-info">
+                    <h4>Frost Grave</h4>
+                    <p>Frozen spirits in icy tombs</p>
+                </div>
+            </div>
+
+            <div class="theme-option" data-theme="pumpkin">
+                <div class="theme-color" style="background: linear-gradient(135deg, #F59E0B, #D97706);"></div>
+                <div class="theme-info">
+                    <h4>Pumpkin Patch</h4>
+                    <p>Classic Halloween orange</p>
+                </div>
+            </div>
+
+            <div class="theme-option" data-theme="midnight">
+                <div class="theme-color" style="background: linear-gradient(135deg, #4B5563, #1F2937);"></div>
+                <div class="theme-info">
+                    <h4>Midnight Hour</h4>
+                    <p>Monochrome ghostly gray</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Content -->
+    <div class="content">
+        <div class="hero">
+            <h1>HAUNTED REALM</h1>
+            <p>Choose your curse and embrace the darkness</p>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>Dark Magic</h3>
+                <p>Unleash forbidden spells and ancient curses upon your enemies. The power flows through you like blood through veins.</p>
+                <button class="btn">Cast Spell</button>
+            </div>
+
+            <div class="card">
+                <h3>Shadow Realm</h3>
+                <p>Step into the void between worlds where reality bends and nightmares come alive in the eternal darkness.</p>
+                <button class="btn">Enter Portal</button>
+            </div>
+
+            <div class="card">
+                <h3>Cursed Souls</h3>
+                <p>Join the legion of the damned, wandering eternally through the mist seeking redemption that will never come.</p>
+                <button class="btn">Embrace Curse</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // THEME SWITCHER LOGIC
+        // ============================================
+
+        const themes = {
+            blood: {
+                primary: '#DC143C',
+                secondary: '#8B0000',
+                accent: '#FF1744',
+                glow: 'rgba(220, 20, 60, 0.6)',
+                icon: '🎃',
+                name: 'Blood Moon'
+            },
+            toxic: {
+                primary: '#39FF14',
+                secondary: '#0A4',
+                accent: '#0FFF50',
+                glow: 'rgba(57, 255, 20, 0.6)',
+                icon: '☢️',
+                name: 'Toxic Waste'
+            },
+            mystic: {
+                primary: '#8B5CF6',
+                secondary: '#6B46C1',
+                accent: '#A78BFA',
+                glow: 'rgba(139, 92, 246, 0.6)',
+                icon: '🔮',
+                name: 'Mystic Void'
+            },
+            frost: {
+                primary: '#06B6D4',
+                secondary: '#0891B2',
+                accent: '#22D3EE',
+                glow: 'rgba(6, 182, 212, 0.6)',
+                icon: '❄️',
+                name: 'Frost Grave'
+            },
+            pumpkin: {
+                primary: '#F59E0B',
+                secondary: '#D97706',
+                accent: '#FBBF24',
+                glow: 'rgba(245, 158, 11, 0.6)',
+                icon: '🎃',
+                name: 'Pumpkin Patch'
+            },
+            midnight: {
+                primary: '#9CA3AF',
+                secondary: '#4B5563',
+                accent: '#D1D5DB',
+                glow: 'rgba(156, 163, 175, 0.6)',
+                icon: '🌙',
+                name: 'Midnight Hour'
+            }
+        };
+
+        const themeToggle = document.getElementById('themeToggle');
+        const themeMenu = document.getElementById('themeMenu');
+        const themeOptions = document.querySelectorAll('.theme-option');
+
+        // Toggle menu
+        themeToggle.addEventListener('click', () => {
+            themeMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.theme-switcher')) {
+                themeMenu.classList.remove('active');
+            }
+        });
+
+        // Apply theme
+        function applyTheme(themeName) {
+            const theme = themes[themeName];
+            const root = document.documentElement;
+
+            root.style.setProperty('--primary-color', theme.primary);
+            root.style.setProperty('--secondary-color', theme.secondary);
+            root.style.setProperty('--accent-color', theme.accent);
+            root.style.setProperty('--glow-color', theme.glow);
+
+            themeToggle.textContent = theme.icon;
+
+            // Update active state
+            themeOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.theme === themeName) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Save to localStorage
+            localStorage.setItem('halloween-theme', themeName);
+
+            // Close menu
+            setTimeout(() => themeMenu.classList.remove('active'), 300);
+        }
+
+        // Theme option click handlers
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                applyTheme(option.dataset.theme);
+            });
+        });
+
+        // Load saved theme on page load
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('halloween-theme') || 'blood';
+            applyTheme(savedTheme);
+        });
+    </script>
+</body>
+</html>

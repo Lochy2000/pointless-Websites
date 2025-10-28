@@ -1,0 +1,30 @@
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  body {
+    font-size: 0.8rem;
+  }
+
+  .arcade-btn {
+    font-size: 1rem;
+  }
+
+  .joystick-container,
+  .action-buttons {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .joystick-container,
+  .action-buttons {
+    display: none;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .game-screen {
+    max-width: 90vw;
+    margin: 0 auto;
+  }
+}

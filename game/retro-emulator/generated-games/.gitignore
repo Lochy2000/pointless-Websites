@@ -1,0 +1,5 @@
+# Ignore all generated games
+*
+
+# But keep this .gitignore file
+!.gitignore

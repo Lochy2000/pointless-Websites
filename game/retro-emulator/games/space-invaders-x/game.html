@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Invaders X</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      overflow: hidden;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    #gameCanvas {
+      display: block;
+      margin: 0 auto;
+      background: #000;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    #gameOver {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #8c52ff;
+      text-shadow: 0 0 10px #8c52ff;
+      z-index: 10;
+    }
+
+    #gameOver h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    #gameOver p {
+      font-size: 0.8rem;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+  <div id="gameOver">
+    <h2>GAME OVER</h2>
+    <p id="finalScoreText">Score: 0</p>
+    <p style="font-size: 0.6rem; margin-top: 20px;">Press ESC to return to menu</p>
+  </div>
+
+  <!-- Include engine files -->
+  <script src="../../engine/game-api.js"></script>
+  <script src="../../engine/game-engine.js"></script>
+  <script src="../../engine/input-handler.js"></script>
+  <script src="../../engine/collision.js"></script>
+  <script src="../../engine/sprite-manager.js"></script>
+
+  <!-- Game script -->
+  <script src="game.js"></script>
+</body>
+</html>

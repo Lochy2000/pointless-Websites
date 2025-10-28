@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Creatures Component</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #000 0%, #0A0A0A 50%, #1C1C1C 100%);
+            color: #E8E8E8;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .info {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 1000;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .info h1 {
+            font-size: 48px;
+            color: #DC143C;
+            text-shadow: 0 0 20px rgba(220, 20, 60, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .info p {
+            color: #A0A0A0;
+            font-size: 16px;
+        }
+
+        /* ============================================
+           FLOATING GHOST COMPONENT
+           ============================================ */
+
+        .ghost {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            opacity: 0;
+            animation: ghostFloat 20s infinite ease-in-out;
+            filter: drop-shadow(0 0 15px rgba(232, 232, 232, 0.6));
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .ghost:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 25px rgba(232, 232, 232, 1));
+        }
+
+        .ghost-body {
+            width: 50px;
+            height: 40px;
+            background: rgba(232, 232, 232, 0.2);
+            border-radius: 50% 50% 0 0;
+            position: relative;
+        }
+
+        /* Ghost eyes */
+        .ghost-body::before,
+        .ghost-body::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            top: 15px;
+        }
+
+        .ghost-body::before {
+            left: 12px;
+        }
+
+        .ghost-body::after {
+            right: 12px;
+        }
+
+        /* Ghost tail (wavy bottom) */
+        .ghost-tail {
+            position: absolute;
+            bottom: 0;
+            width: 50px;
+            height: 20px;
+            background:
+                radial-gradient(circle at 10% 0%, transparent 0, transparent 10px, rgba(232, 232, 232, 0.2) 10px),
+                radial-gradient(circle at 30% 0%, transparent 0, transparent 10px, rgba(232, 232, 232, 0.2) 10px),
+                radial-gradient(circle at 50% 0%, transparent 0, transparent 10px, rgba(232, 232, 232, 0.2) 10px),
+                radial-gradient(circle at 70% 0%, transparent 0, transparent 10px, rgba(232, 232, 232, 0.2) 10px),
+                radial-gradient(circle at 90% 0%, transparent 0, transparent 10px, rgba(232, 232, 232, 0.2) 10px);
+            background-size: 20% 100%;
+            background-repeat: repeat-x;
+        }
+
+        @keyframes ghostFloat {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) translateY(100vh) rotate(0deg);
+            }
+            10% {
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateX(50vw) translateY(30vh) rotate(5deg);
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) translateY(-100px) rotate(-5deg);
+            }
+        }
+
+        /* ============================================
+           FLYING BAT COMPONENT
+           ============================================ */
+
+        .bat {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            opacity: 0;
+            animation: batFly 18s infinite ease-in-out;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .bat:hover {
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 10px #DC143C);
+        }
+
+        .bat-body {
+            position: absolute;
+            width: 10px;
+            height: 15px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 5px;
+        }
+
+        .bat-wing {
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            background: #1a1a1a;
+            border-radius: 50% 50% 50% 0;
+            top: 0;
+            animation: flapWings 0.4s infinite ease-in-out;
+        }
+
+        .bat-wing.left {
+            left: -5px;
+            transform-origin: right center;
+        }
+
+        .bat-wing.right {
+            right: -5px;
+            transform: scaleX(-1);
+            transform-origin: left center;
+        }
+
+        @keyframes batFly {
+            0% {
+                opacity: 0;
+                transform: translate(120vw, 20vh) scale(0.8);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-100px, 80vh) scale(1.2);
+            }
+        }
+
+        @keyframes flapWings {
+            0%, 100% {
+                transform: rotateY(0deg) scaleY(1);
+            }
+            50% {
+                transform: rotateY(60deg) scaleY(0.6);
+            }
+        }
+
+        /* ============================================
+           FLOATING SKULL COMPONENT
+           ============================================ */
+
+        .skull {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            animation: skullFloat 25s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(220, 20, 60, 0.6));
+            cursor: pointer;
+            font-size: 50px;
+            transition: transform 0.3s;
+        }
+
+        .skull:hover {
+            transform: scale(1.3) rotate(360deg);
+            filter: drop-shadow(0 0 20px rgba(220, 20, 60, 1));
+        }
+
+        @keyframes skullFloat {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) translateY(-50px) rotate(0deg);
+            }
+            10% {
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateX(20vw) translateY(50vh) rotate(180deg);
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100px) translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* ============================================
+           FLOATING EYE COMPONENT
+           ============================================ */
+
+        .eye {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+            animation: eyeFloat 22s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        .eye-outer {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #fff 0%, #DC143C 60%, #000 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+        }
+
+        .eye-pupil {
+            width: 24px;
+            height: 24px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: lookAround 5s infinite;
+        }
+
+        .eye-pupil::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            position: absolute;
+            top: 6px;
+            left: 6px;
+        }
+
+        @keyframes eyeFloat {
+            0% {
+                opacity: 0;
+                transform: translate(-100px, 50vh) scale(0.8);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(100vw, 30vh) scale(1.1);
+            }
+        }
+
+        @keyframes lookAround {
+            0%, 100% {
+                transform: translate(-50%, -50%);
+            }
+            25% {
+                transform: translate(-35%, -60%);
+            }
+            50% {
+                transform: translate(-65%, -50%);
+            }
+            75% {
+                transform: translate(-50%, -40%);
+            }
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid #DC143C;
+            background: rgba(0, 0, 0, 0.8);
+            color: #DC143C;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: rgba(220, 20, 60, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>Floating Creatures</h1>
+        <p>Hover over the creatures to interact</p>
+    </div>
+
+    <!-- Container for creatures -->
+    <div id="creature-container"></div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="control-btn" onclick="addMoreCreatures('ghost', 3)">Add Ghosts</button>
+        <button class="control-btn" onclick="addMoreCreatures('bat', 3)">Add Bats</button>
+        <button class="control-btn" onclick="addMoreCreatures('skull', 3)">Add Skulls</button>
+        <button class="control-btn" onclick="addMoreCreatures('eye', 3)">Add Eyes</button>
+        <button class="control-btn" onclick="clearCreatures()">Clear All</button>
+    </div>
+
+    <script>
+        // ============================================
+        // CREATURE GENERATION
+        // ============================================
+
+        const container = document.getElementById('creature-container');
+
+        function createGhost() {
+            const ghost = document.createElement('div');
+            ghost.className = 'ghost';
+            ghost.style.left = Math.random() * 100 + '%';
+            ghost.style.animationDelay = Math.random() * 10 + 's';
+            ghost.style.animationDuration = (15 + Math.random() * 10) + 's';
+
+            ghost.innerHTML = `
+                <div class="ghost-body"></div>
+                <div class="ghost-tail"></div>
+            `;
+
+            ghost.addEventListener('click', () => {
+                ghost.style.animation = 'none';
+                ghost.style.opacity = '0';
+                setTimeout(() => ghost.remove(), 500);
+            });
+
+            return ghost;
+        }
+
+        function createBat() {
+            const bat = document.createElement('div');
+            bat.className = 'bat';
+            bat.style.top = (Math.random() * 80) + '%';
+            bat.style.animationDelay = Math.random() * 8 + 's';
+            bat.style.animationDuration = (12 + Math.random() * 8) + 's';
+
+            bat.innerHTML = `
+                <div class="bat-body"></div>
+                <div class="bat-wing left"></div>
+                <div class="bat-wing right"></div>
+            `;
+
+            bat.addEventListener('click', () => {
+                bat.style.animation = 'none';
+                bat.style.opacity = '0';
+                setTimeout(() => bat.remove(), 500);
+            });
+
+            return bat;
+        }
+
+        function createSkull() {
+            const skull = document.createElement('div');
+            skull.className = 'skull';
+            skull.textContent = '💀';
+            skull.style.animationDelay = Math.random() * 12 + 's';
+            skull.style.animationDuration = (18 + Math.random() * 12) + 's';
+
+            skull.addEventListener('click', () => {
+                skull.style.animation = 'none';
+                skull.style.opacity = '0';
+                setTimeout(() => skull.remove(), 500);
+            });
+
+            return skull;
+        }
+
+        function createEye() {
+            const eye = document.createElement('div');
+            eye.className = 'eye';
+            eye.style.animationDelay = Math.random() * 10 + 's';
+            eye.style.animationDuration = (16 + Math.random() * 10) + 's';
+
+            eye.innerHTML = `
+                <div class="eye-outer">
+                    <div class="eye-pupil"></div>
+                </div>
+            `;
+
+            eye.addEventListener('click', () => {
+                eye.style.animation = 'none';
+                eye.style.opacity = '0';
+                setTimeout(() => eye.remove(), 500);
+            });
+
+            return eye;
+        }
+
+        // Add creatures on load
+        function initCreatures() {
+            for (let i = 0; i < 5; i++) {
+                container.appendChild(createGhost());
+                container.appendChild(createBat());
+                container.appendChild(createSkull());
+                container.appendChild(createEye());
+            }
+        }
+
+        // Add more creatures
+        function addMoreCreatures(type, count) {
+            for (let i = 0; i < count; i++) {
+                let creature;
+                switch(type) {
+                    case 'ghost':
+                        creature = createGhost();
+                        break;
+                    case 'bat':
+                        creature = createBat();
+                        break;
+                    case 'skull':
+                        creature = createSkull();
+                        break;
+                    case 'eye':
+                        creature = createEye();
+                        break;
+                }
+                if (creature) {
+                    container.appendChild(creature);
+                }
+            }
+        }
+
+        // Clear all creatures
+        function clearCreatures() {
+            container.innerHTML = '';
+        }
+
+        // Initialize on load
+        window.addEventListener('load', initCreatures);
+    </script>
+</body>
+</html>

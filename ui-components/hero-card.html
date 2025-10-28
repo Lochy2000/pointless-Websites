@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Card Component</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #000 0%, #0A0A0A 50%, #1C1C1C 100%);
+            color: #E8E8E8;
+            font-family: 'Cinzel', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================
+           HERO CARD COMPONENT
+           ============================================ */
+
+        .hero-card {
+            width: 500px;
+            min-height: 350px;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                0 4px 16px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-10px) rotateX(2deg);
+            border-color: rgba(220, 20, 60, 0.5);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(220, 20, 60, 0.3),
+                0 0 0 1px rgba(220, 20, 60, 0.2),
+                0 0 40px rgba(220, 20, 60, 0.2);
+        }
+
+        /* Crack Effect */
+        .crack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            background-image:
+                linear-gradient(135deg, transparent 40%, rgba(220, 20, 60, 0.1) 41%, transparent 42%),
+                linear-gradient(45deg, transparent 48%, rgba(220, 20, 60, 0.1) 49%, rgba(220, 20, 60, 0.1) 51%, transparent 52%),
+                linear-gradient(90deg, transparent 60%, rgba(220, 20, 60, 0.08) 61%, transparent 62%);
+        }
+
+        .hero-card:hover .crack {
+            opacity: 0.4;
+        }
+
+        /* Shimmer Effect */
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(220, 20, 60, 0.1), transparent);
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+
+        .hero-card:hover::before {
+            opacity: 1;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        /* Title */
+        .hero-card h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #E8E8E8;
+            text-shadow:
+                0 0 20px rgba(220, 20, 60, 0.5),
+                0 0 40px rgba(220, 20, 60, 0.3),
+                0 0 60px rgba(220, 20, 60, 0.2),
+                3px 3px 0 rgba(0, 0, 0, 0.8);
+            animation: breathe 4s infinite ease-in-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                text-shadow:
+                    0 0 20px rgba(220, 20, 60, 0.5),
+                    0 0 40px rgba(220, 20, 60, 0.3),
+                    0 0 60px rgba(220, 20, 60, 0.2),
+                    3px 3px 0 rgba(0, 0, 0, 0.8);
+            }
+            50% {
+                text-shadow:
+                    0 0 30px rgba(220, 20, 60, 0.7),
+                    0 0 50px rgba(220, 20, 60, 0.5),
+                    0 0 80px rgba(220, 20, 60, 0.3),
+                    3px 3px 0 rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        /* Subtitle */
+        .hero-card p {
+            font-family: 'Spectral', serif;
+            font-size: 18px;
+            color: #A0A0A0;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-weight: 300;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            color: #fff;
+            box-shadow:
+                0 10px 30px rgba(220, 20, 60, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(220, 20, 60, 0.8);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #FF1744 0%, #DC143C 100%);
+            box-shadow:
+                0 15px 50px rgba(220, 20, 60, 0.7),
+                0 0 30px rgba(220, 20, 60, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #DC143C;
+            border: 2px solid rgba(220, 20, 60, 0.6);
+            box-shadow: inset 0 0 20px rgba(220, 20, 60, 0.05);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(220, 20, 60, 0.15);
+            border-color: #DC143C;
+            box-shadow:
+                inset 0 0 30px rgba(220, 20, 60, 0.2),
+                0 0 20px rgba(220, 20, 60, 0.4);
+            transform: translateY(-3px);
+            color: #FF1744;
+        }
+
+        /* Theme Variants */
+        .hero-card.theme-purple h1 {
+            text-shadow:
+                0 0 20px rgba(139, 92, 246, 0.5),
+                0 0 40px rgba(139, 92, 246, 0.3),
+                0 0 60px rgba(139, 92, 246, 0.2),
+                3px 3px 0 rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-card.theme-purple {
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .hero-card.theme-purple:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(139, 92, 246, 0.3),
+                0 0 0 1px rgba(139, 92, 246, 0.2),
+                0 0 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .hero-card.theme-purple .btn-primary {
+            background: linear-gradient(135deg, #8B5CF6 0%, #6B46C1 100%);
+            border-color: rgba(139, 92, 246, 0.8);
+            box-shadow:
+                0 10px 30px rgba(139, 92, 246, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-card.theme-purple .btn-secondary {
+            color: #8B5CF6;
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .hero-card.theme-cyan h1 {
+            text-shadow:
+                0 0 20px rgba(6, 182, 212, 0.5),
+                0 0 40px rgba(6, 182, 212, 0.3),
+                0 0 60px rgba(6, 182, 212, 0.2),
+                3px 3px 0 rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-card.theme-cyan {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .hero-card.theme-cyan:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(6, 182, 212, 0.3),
+                0 0 0 1px rgba(6, 182, 212, 0.2),
+                0 0 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .hero-card.theme-cyan .btn-primary {
+            background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+            border-color: rgba(6, 182, 212, 0.8);
+            box-shadow:
+                0 10px 30px rgba(6, 182, 212, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-card.theme-cyan .btn-secondary {
+            color: #06B6D4;
+            border-color: rgba(6, 182, 212, 0.6);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .theme-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Card - Red Theme -->
+    <div class="hero-card" id="card1">
+        <div class="crack"></div>
+        <h1>Enter the Shadows</h1>
+        <p>Venture into a realm where darkness reigns and ancient spirits whisper secrets from beyond the veil.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary">Enter Portal</a>
+            <a href="#" class="btn btn-secondary">Read More</a>
+        </div>
+    </div>
+
+    <!-- Hero Card - Purple Theme -->
+    <div class="hero-card theme-purple" id="card2">
+        <div class="crack"></div>
+        <h1>Mystic Powers</h1>
+        <p>Unlock forbidden knowledge and harness the arcane energies that flow through the cosmos.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary">Begin Journey</a>
+            <a href="#" class="btn btn-secondary">Explore</a>
+        </div>
+    </div>
+
+    <!-- Hero Card - Cyan Theme -->
+    <div class="hero-card theme-cyan" id="card3">
+        <div class="crack"></div>
+        <h1>Frozen Depths</h1>
+        <p>Descend into crystalline caverns where ancient ice preserves mysteries of forgotten ages.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary">Dive Deep</a>
+            <a href="#" class="btn btn-secondary">Discover</a>
+        </div>
+    </div>
+
+    <!-- Theme Controls -->
+    <div class="controls">
+        <button class="theme-btn" style="border-color: #DC143C;" onclick="changeTheme('red')">Blood</button>
+        <button class="theme-btn" style="border-color: #8B5CF6;" onclick="changeTheme('purple')">Mystic</button>
+        <button class="theme-btn" style="border-color: #06B6D4;" onclick="changeTheme('cyan')">Frost</button>
+    </div>
+
+    <script>
+        // ============================================
+        // HERO CARD INTERACTIONS
+        // ============================================
+
+        // 3D Tilt Effect
+        const cards = document.querySelectorAll('.hero-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
+
+                card.style.transform = `translateY(-10px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Button Click Effect
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent)';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.animation = 'rippleEffect 0.8s ease-out';
+
+                const rect = btn.getBoundingClientRect();
+                ripple.style.left = (e.clientX - rect.left - 10) + 'px';
+                ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+
+                btn.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 800);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Theme Changer
+        function changeTheme(theme) {
+            const card1 = document.getElementById('card1');
+            const card2 = document.getElementById('card2');
+            const card3 = document.getElementById('card3');
+
+            card1.className = 'hero-card';
+            card2.className = 'hero-card';
+            card3.className = 'hero-card';
+
+            if (theme === 'purple') {
+                card1.classList.add('theme-purple');
+                card2.classList.add('theme-purple');
+                card3.classList.add('theme-purple');
+            } else if (theme === 'cyan') {
+                card1.classList.add('theme-cyan');
+                card2.classList.add('theme-cyan');
+                card3.classList.add('theme-cyan');
+            }
+        }
+    </script>
+</body>
+</html>

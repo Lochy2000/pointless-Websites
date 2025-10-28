@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --primary: #8c52ff;
+  --secondary: #ff5252;
+  --dark: #1a1a2e;
+  --light: #e6e6ff;
+  --accent: #00eeff;
+}
+
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: var(--dark);
+  color: var(--light);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.game-screen {
+  background-color: #000;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.high-score-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.high-score-table th,
+.high-score-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.high-score-table th {
+  text-align: left;
+  color: var(--accent);
+}
+
+.menu-slide {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pixel-effect {
+  image-rendering: pixelated;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}

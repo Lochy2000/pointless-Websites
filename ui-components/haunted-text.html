@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haunted Text Component</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Cinzel:wght@400;600;700;900&family=Eater&family=Butcherman&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #000;
+            color: #E8E8E8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            padding: 40px;
+        }
+
+        /* ============================================
+           HAUNTED TEXT STYLES
+           ============================================ */
+
+        /* 1. Flickering Neon Text */
+        .text-flicker {
+            font-family: 'Creepster', cursive;
+            font-size: 64px;
+            color: #DC143C;
+            text-shadow:
+                0 0 10px rgba(220, 20, 60, 0.8),
+                0 0 20px rgba(220, 20, 60, 0.6),
+                0 0 30px rgba(220, 20, 60, 0.4),
+                2px 2px 0 #000,
+                -2px -2px 0 #000;
+            letter-spacing: 3px;
+            animation: flicker 4s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow:
+                    0 0 10px rgba(220, 20, 60, 0.8),
+                    0 0 20px rgba(220, 20, 60, 0.6),
+                    0 0 30px rgba(220, 20, 60, 0.4),
+                    2px 2px 0 #000,
+                    -2px -2px 0 #000;
+            }
+            20%, 24%, 55% {
+                text-shadow:
+                    0 0 5px rgba(220, 20, 60, 0.4),
+                    2px 2px 0 #000,
+                    -2px -2px 0 #000;
+            }
+        }
+
+        /* 2. Glitch Text */
+        .text-glitch {
+            font-family: 'Cinzel', serif;
+            font-size: 72px;
+            font-weight: 900;
+            color: #E8E8E8;
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        .text-glitch::before,
+        .text-glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .text-glitch::before {
+            color: #DC143C;
+            animation: glitchBefore 2s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            text-shadow: 2px 0 #DC143C;
+        }
+
+        .text-glitch::after {
+            color: #06B6D4;
+            animation: glitchAfter 2s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            text-shadow: -2px 0 #06B6D4;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+        }
+
+        @keyframes glitchBefore {
+            0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
+            33% { clip-path: polygon(0 15%, 100% 15%, 100% 65%, 0 65%); }
+            66% { clip-path: polygon(0 30%, 100% 30%, 100% 80%, 0 80%); }
+        }
+
+        @keyframes glitchAfter {
+            0%, 100% { clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }
+            33% { clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%); }
+            66% { clip-path: polygon(0 40%, 100% 40%, 100% 90%, 0 90%); }
+        }
+
+        /* 3. Dripping Blood Text */
+        .text-drip {
+            font-family: 'Nosifer', cursive;
+            font-size: 56px;
+            color: #8B0000;
+            text-shadow:
+                0 2px 0 #DC143C,
+                0 4px 10px rgba(220, 20, 60, 0.8);
+            position: relative;
+            filter: drop-shadow(0 0 20px #DC143C);
+        }
+
+        .text-drip::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: 20%;
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(180deg, #8B0000, #DC143C, transparent);
+            border-radius: 0 0 50% 50%;
+            animation: drip 3s infinite;
+        }
+
+        @keyframes drip {
+            0%, 100% {
+                height: 0;
+                opacity: 0;
+            }
+            50% {
+                height: 40px;
+                opacity: 1;
+            }
+        }
+
+        /* 4. Breathing Glow Text */
+        .text-breathe {
+            font-family: 'Cinzel', serif;
+            font-size: 64px;
+            font-weight: 900;
+            color: #E8E8E8;
+            text-shadow:
+                0 0 20px rgba(220, 20, 60, 0.5),
+                0 0 40px rgba(220, 20, 60, 0.3),
+                0 0 60px rgba(220, 20, 60, 0.2),
+                3px 3px 0 rgba(0, 0, 0, 0.8);
+            animation: breathe 4s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                text-shadow:
+                    0 0 20px rgba(220, 20, 60, 0.5),
+                    0 0 40px rgba(220, 20, 60, 0.3),
+                    0 0 60px rgba(220, 20, 60, 0.2),
+                    3px 3px 0 rgba(0, 0, 0, 0.8);
+            }
+            50% {
+                text-shadow:
+                    0 0 30px rgba(220, 20, 60, 0.7),
+                    0 0 50px rgba(220, 20, 60, 0.5),
+                    0 0 80px rgba(220, 20, 60, 0.3),
+                    3px 3px 0 rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        /* 5. Cracked Text */
+        .text-crack {
+            font-family: 'Eater', cursive;
+            font-size: 68px;
+            color: #E8E8E8;
+            text-shadow:
+                2px 2px 0 #8B0000,
+                4px 4px 0 #DC143C,
+                6px 6px 10px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .text-crack::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: transparent;
+            background: linear-gradient(135deg, transparent 40%, #DC143C 41%, transparent 42%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        /* 6. Typewriter Text */
+        .text-typewriter {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            color: #DC143C;
+            border-right: 3px solid #DC143C;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(20) infinite, blink 0.7s infinite;
+            max-width: fit-content;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* 7. Shadow Text */
+        .text-shadow {
+            font-family: 'Butcherman', cursive;
+            font-size: 64px;
+            color: #DC143C;
+            text-shadow:
+                0 0 10px #DC143C,
+                5px 5px 0 rgba(0, 0, 0, 0.8),
+                10px 10px 0 rgba(220, 20, 60, 0.3),
+                15px 15px 0 rgba(0, 0, 0, 0.6),
+                20px 20px 30px rgba(220, 20, 60, 0.2);
+            animation: shadowFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes shadowFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .color-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .color-btn:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Controls -->
+    <div class="controls">
+        <button class="color-btn" style="border-color: #DC143C;" onclick="changeColor('#DC143C', '#8B0000')">Red</button>
+        <button class="color-btn" style="border-color: #8B5CF6;" onclick="changeColor('#8B5CF6', '#6B46C1')">Purple</button>
+        <button class="color-btn" style="border-color: #06B6D4;" onclick="changeColor('#06B6D4', '#0891B2')">Cyan</button>
+        <button class="color-btn" style="border-color: #10B981;" onclick="changeColor('#10B981', '#059669')">Green</button>
+        <button class="color-btn" style="border-color: #F59E0B;" onclick="changeColor('#F59E0B', '#D97706')">Orange</button>
+    </div>
+
+    <!-- Text Examples -->
+    <h1 class="text-flicker">HAUNTED REALM</h1>
+
+    <h1 class="text-glitch" data-text="GLITCH EFFECT">GLITCH EFFECT</h1>
+
+    <h1 class="text-drip">BLOOD DRIP</h1>
+
+    <h1 class="text-breathe">BREATHING GLOW</h1>
+
+    <h1 class="text-crack" data-text="CRACKED SOUL">CRACKED SOUL</h1>
+
+    <h1 class="text-typewriter">Typing Horror...</h1>
+
+    <h1 class="text-shadow">SHADOW REALM</h1>
+
+    <script>
+        // ============================================
+        // COLOR THEME CHANGER
+        // ============================================
+
+        function changeColor(primary, secondary) {
+            const root = document.documentElement;
+
+            // Update all text elements
+            document.querySelectorAll('[class^="text-"]').forEach(el => {
+                el.style.color = el.classList.contains('text-crack') ? '#E8E8E8' : primary;
+            });
+
+            // Update CSS variables for animations
+            const style = document.createElement('style');
+            style.id = 'dynamic-colors';
+
+            const oldStyle = document.getElementById('dynamic-colors');
+            if (oldStyle) oldStyle.remove();
+
+            style.textContent = `
+                .text-flicker {
+                    color: ${primary};
+                    text-shadow:
+                        0 0 10px ${primary}cc,
+                        0 0 20px ${primary}99,
+                        0 0 30px ${primary}66,
+                        2px 2px 0 #000,
+                        -2px -2px 0 #000;
+                }
+
+                @keyframes flicker {
+                    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                        text-shadow:
+                            0 0 10px ${primary}cc,
+                            0 0 20px ${primary}99,
+                            0 0 30px ${primary}66,
+                            2px 2px 0 #000,
+                            -2px -2px 0 #000;
+                    }
+                    20%, 24%, 55% {
+                        text-shadow:
+                            0 0 5px ${primary}66,
+                            2px 2px 0 #000,
+                            -2px -2px 0 #000;
+                    }
+                }
+
+                .text-glitch::before {
+                    color: ${primary};
+                    text-shadow: 2px 0 ${primary};
+                }
+
+                .text-breathe {
+                    text-shadow:
+                        0 0 20px ${primary}80,
+                        0 0 40px ${primary}4d,
+                        0 0 60px ${primary}33,
+                        3px 3px 0 rgba(0, 0, 0, 0.8);
+                }
+
+                @keyframes breathe {
+                    0%, 100% {
+                        text-shadow:
+                            0 0 20px ${primary}80,
+                            0 0 40px ${primary}4d,
+                            0 0 60px ${primary}33,
+                            3px 3px 0 rgba(0, 0, 0, 0.8);
+                    }
+                    50% {
+                        text-shadow:
+                            0 0 30px ${primary}b3,
+                            0 0 50px ${primary}80,
+                            0 0 80px ${primary}4d,
+                            3px 3px 0 rgba(0, 0, 0, 0.8);
+                    }
+                }
+
+                .text-drip {
+                    color: ${secondary};
+                    text-shadow:
+                        0 2px 0 ${primary},
+                        0 4px 10px ${primary}cc;
+                    filter: drop-shadow(0 0 20px ${primary});
+                }
+
+                .text-drip::after {
+                    background: linear-gradient(180deg, ${secondary}, ${primary}, transparent);
+                }
+
+                .text-crack {
+                    text-shadow:
+                        2px 2px 0 ${secondary},
+                        4px 4px 0 ${primary},
+                        6px 6px 10px rgba(0, 0, 0, 0.8);
+                }
+
+                .text-crack::before {
+                    background: linear-gradient(135deg, transparent 40%, ${primary} 41%, transparent 42%);
+                }
+
+                .text-typewriter {
+                    color: ${primary};
+                    border-right-color: ${primary};
+                }
+
+                .text-shadow {
+                    color: ${primary};
+                    text-shadow:
+                        0 0 10px ${primary},
+                        5px 5px 0 rgba(0, 0, 0, 0.8),
+                        10px 10px 0 ${primary}4d,
+                        15px 15px 0 rgba(0, 0, 0, 0.6),
+                        20px 20px 30px ${primary}33;
+                }
+            `;
+
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>

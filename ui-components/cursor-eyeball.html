@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyeball Cursor Component</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #000;
+            color: #E8E8E8;
+            font-family: 'Arial', sans-serif;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .demo-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .demo-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #DC143C;
+        }
+
+        .demo-content p {
+            font-size: 18px;
+            color: #A0A0A0;
+            margin-bottom: 30px;
+        }
+
+        .demo-button {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #DC143C, #8B0000);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: none;
+            transition: transform 0.3s;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.5);
+        }
+
+        /* ============================================
+           EYEBALL CURSOR COMPONENT
+           ============================================ */
+
+        .cursor {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.6));
+        }
+
+        .cursor-eye {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #E8E8E8 30%, #8B0000 60%, #000 100%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8),
+                        0 0 30px rgba(220, 20, 60, 0.4);
+        }
+
+        .cursor-pupil {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 35% 35%, #1a1a1a, #000);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+        }
+
+        .cursor-pupil::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+        }
+
+        /* Hover state - eye becomes bloodshot */
+        .cursor.hover .cursor-eye {
+            background: radial-gradient(circle at 30% 30%, #DC143C 0%, #8B0000 40%, #000 70%);
+            animation: bloodshot 0.3s ease;
+        }
+
+        .cursor.hover {
+            transform: translate(-50%, -50%) scale(1.3);
+        }
+
+        @keyframes bloodshot {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+        }
+
+        /* Cursor Trail */
+        .cursor-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #DC143C;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0;
+            box-shadow: 0 0 10px #DC143C;
+            animation: trailFade 0.8s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        /* Color Variants */
+        .cursor.theme-green .cursor-eye {
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #E8E8E8 30%, #0F6 60%, #000 100%);
+        }
+
+        .cursor.theme-green.hover .cursor-eye {
+            background: radial-gradient(circle at 30% 30%, #0F6 0%, #0A4 40%, #000 70%);
+        }
+
+        .cursor.theme-purple .cursor-eye {
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #E8E8E8 30%, #8B5CF6 60%, #000 100%);
+        }
+
+        .cursor.theme-purple.hover .cursor-eye {
+            background: radial-gradient(circle at 30% 30%, #8B5CF6 0%, #6B46C1 40%, #000 70%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Eyeball Cursor -->
+    <div class="cursor">
+        <div class="cursor-eye">
+            <div class="cursor-pupil"></div>
+        </div>
+    </div>
+
+    <!-- Demo Content -->
+    <div class="demo-content">
+        <h1>Eyeball Cursor Component</h1>
+        <p>Move your mouse and watch the eye follow you</p>
+        <button class="demo-button">Hover Over Me</button>
+        <br><br>
+        <div style="margin-top: 20px;">
+            <button class="demo-button" onclick="changeTheme('red')">Red Theme</button>
+            <button class="demo-button" onclick="changeTheme('green')" style="background: linear-gradient(135deg, #0F6, #0A4);">Green Theme</button>
+            <button class="demo-button" onclick="changeTheme('purple')" style="background: linear-gradient(135deg, #8B5CF6, #6B46C1);">Purple Theme</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // EYEBALL CURSOR SCRIPT
+        // ============================================
+
+        const cursor = document.querySelector('.cursor');
+        const cursorPupil = document.querySelector('.cursor-pupil');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        // Smooth cursor follow with lag
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Cursor trail effect
+        let lastTrailTime = 0;
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastTrailTime > 50) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+
+                setTimeout(() => trail.remove(), 800);
+                lastTrailTime = now;
+            }
+        });
+
+        // Pupil follows mouse precisely
+        document.addEventListener('mousemove', (e) => {
+            const rect = cursor.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            const distance = Math.min(8, Math.hypot(e.clientX - centerX, e.clientY - centerY) / 20);
+
+            const pupilX = Math.cos(angle) * distance;
+            const pupilY = Math.sin(angle) * distance;
+
+            cursorPupil.style.transform = `translate(calc(-50% + ${pupilX}px), calc(-50% + ${pupilY}px))`;
+        });
+
+        // Hover effects on interactive elements
+        const interactiveElements = document.querySelectorAll('button, a, .demo-button');
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // Theme changer
+        function changeTheme(theme) {
+            cursor.classList.remove('theme-green', 'theme-purple');
+            if (theme === 'green') {
+                cursor.classList.add('theme-green');
+            } else if (theme === 'purple') {
+                cursor.classList.add('theme-purple');
+            }
+        }
+    </script>
+</body>
+</html>

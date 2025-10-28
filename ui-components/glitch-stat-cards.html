@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitch Stat Cards Component</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #000 0%, #0A0A0A 50%, #1C1C1C 100%);
+            color: #E8E8E8;
+            font-family: 'Cinzel', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================
+           STAT CARD COMPONENT
+           ============================================ */
+
+        .stat-card {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                0 4px 16px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(220, 20, 60, 0.5);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(220, 20, 60, 0.3),
+                0 0 0 1px rgba(220, 20, 60, 0.2),
+                0 0 40px rgba(220, 20, 60, 0.2);
+        }
+
+        /* Crack Effect */
+        .crack {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            background-image:
+                linear-gradient(135deg, transparent 40%, rgba(220, 20, 60, 0.1) 41%, transparent 42%),
+                linear-gradient(45deg, transparent 48%, rgba(220, 20, 60, 0.1) 49%, rgba(220, 20, 60, 0.1) 51%, transparent 52%),
+                linear-gradient(90deg, transparent 60%, rgba(220, 20, 60, 0.08) 61%, transparent 62%);
+        }
+
+        .stat-card:hover .crack {
+            opacity: 0.4;
+        }
+
+        /* Icon */
+        .icon {
+            font-size: 48px;
+            filter: drop-shadow(0 0 15px rgba(220, 20, 60, 0.5));
+            animation: iconFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.05);
+            }
+        }
+
+        /* Number */
+        .number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            color: #DC143C;
+            text-shadow:
+                0 0 20px rgba(220, 20, 60, 0.8),
+                0 0 40px rgba(220, 20, 60, 0.5),
+                2px 2px 4px rgba(0, 0, 0, 0.8);
+            filter: drop-shadow(0 4px 8px rgba(220, 20, 60, 0.4));
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        /* Glitch Number Animation */
+        .stat-card.glitch .number {
+            animation: glitchNumber 2s infinite;
+            position: relative;
+        }
+
+        @keyframes glitchNumber {
+            0%, 90%, 100% {
+                transform: translate(0);
+                filter: hue-rotate(0deg) drop-shadow(0 4px 8px rgba(220, 20, 60, 0.4));
+            }
+            20% {
+                transform: translate(-2px, 2px);
+                filter: hue-rotate(90deg) drop-shadow(0 4px 8px rgba(220, 20, 60, 0.6));
+            }
+            40% {
+                transform: translate(2px, -2px);
+                filter: hue-rotate(-90deg) drop-shadow(0 4px 8px rgba(220, 20, 60, 0.6));
+            }
+            60% {
+                transform: translate(-1px, 1px);
+                filter: hue-rotate(45deg) drop-shadow(0 4px 8px rgba(220, 20, 60, 0.6));
+            }
+            80% {
+                transform: translate(1px, -1px);
+                filter: hue-rotate(-45deg) drop-shadow(0 4px 8px rgba(220, 20, 60, 0.6));
+            }
+        }
+
+        /* Label */
+        .label {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            color: #707070;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        /* Scan Line Effect */
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.6), transparent);
+            opacity: 0;
+            animation: scanLine 3s infinite;
+        }
+
+        @keyframes scanLine {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        .stat-card:hover::after {
+            animation-play-state: running;
+        }
+
+        /* Hologram Effect */
+        .stat-card.hologram {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .stat-card.hologram:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(6, 182, 212, 0.3),
+                0 0 0 1px rgba(6, 182, 212, 0.2),
+                0 0 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .stat-card.hologram .number {
+            color: #06B6D4;
+            text-shadow:
+                0 0 20px rgba(6, 182, 212, 0.8),
+                0 0 40px rgba(6, 182, 212, 0.5),
+                2px 2px 4px rgba(0, 0, 0, 0.8);
+            filter: drop-shadow(0 4px 8px rgba(6, 182, 212, 0.4));
+        }
+
+        .stat-card.hologram .icon {
+            filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.5));
+        }
+
+        .stat-card.hologram::after {
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.6), transparent);
+        }
+
+        /* Toxic Theme */
+        .stat-card.toxic {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .stat-card.toxic:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(16, 185, 129, 0.3),
+                0 0 0 1px rgba(16, 185, 129, 0.2),
+                0 0 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .stat-card.toxic .number {
+            color: #10B981;
+            text-shadow:
+                0 0 20px rgba(16, 185, 129, 0.8),
+                0 0 40px rgba(16, 185, 129, 0.5),
+                2px 2px 4px rgba(0, 0, 0, 0.8);
+            filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.4));
+        }
+
+        .stat-card.toxic .icon {
+            filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.5));
+        }
+
+        .stat-card.toxic::after {
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .theme-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Stat Cards - Blood Theme -->
+    <div class="stat-card" onclick="toggleGlitch(this)">
+        <div class="crack"></div>
+        <div class="icon">💀</div>
+        <div>
+            <div class="number" data-target="666">0</div>
+            <div class="label">Cursed Souls</div>
+        </div>
+    </div>
+
+    <div class="stat-card glitch" onclick="toggleGlitch(this)">
+        <div class="crack"></div>
+        <div class="icon">👻</div>
+        <div>
+            <div class="number">99%</div>
+            <div class="label">Haunted</div>
+        </div>
+    </div>
+
+    <div class="stat-card" onclick="toggleGlitch(this)">
+        <div class="crack"></div>
+        <div class="icon">🔥</div>
+        <div>
+            <div class="number" data-target="1337">0</div>
+            <div class="label">Active Users</div>
+        </div>
+    </div>
+
+    <!-- Hologram Theme Cards -->
+    <div class="stat-card hologram" onclick="toggleGlitch(this)">
+        <div class="crack"></div>
+        <div class="icon">⚡</div>
+        <div>
+            <div class="number" data-target="9999">0</div>
+            <div class="label">Power Level</div>
+        </div>
+    </div>
+
+    <div class="stat-card hologram glitch" onclick="toggleGlitch(this)">
+        <div class="crack"></div>
+        <div class="icon">🌀</div>
+        <div>
+            <div class="number">∞</div>
+            <div class="label">Dimensions</div>
+        </div>
+    </div>
+
+    <!-- Toxic Theme Cards -->
+    <div class="stat-card toxic" onclick="toggleGlitch(this)">
+        <div class="crack"></div>
+        <div class="icon">☢️</div>
+        <div>
+            <div class="number" data-target="420">0</div>
+            <div class="label">Radiation</div>
+        </div>
+    </div>
+
+    <!-- Theme Controls -->
+    <div class="controls">
+        <button class="theme-btn" style="border-color: #DC143C;" onclick="changeTheme('blood')">Blood</button>
+        <button class="theme-btn" style="border-color: #06B6D4;" onclick="changeTheme('hologram')">Hologram</button>
+        <button class="theme-btn" style="border-color: #10B981;" onclick="changeTheme('toxic')">Toxic</button>
+        <button class="theme-btn" style="border-color: #8B5CF6;" onclick="changeTheme('mystic')">Mystic</button>
+    </div>
+
+    <script>
+        // ============================================
+        // STAT CARD INTERACTIONS
+        // ============================================
+
+        // Number Counter Animation
+        function animateNumber(element) {
+            const target = parseInt(element.dataset.target);
+            if (!target) return;
+
+            let current = 0;
+            const increment = target / 60;
+            const duration = 2000;
+            const stepTime = duration / 60;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, stepTime);
+        }
+
+        // Animate all numbers on load
+        window.addEventListener('load', () => {
+            const numbers = document.querySelectorAll('.number[data-target]');
+            numbers.forEach((num, i) => {
+                setTimeout(() => animateNumber(num), i * 200);
+            });
+        });
+
+        // Toggle glitch effect on click
+        function toggleGlitch(card) {
+            card.classList.toggle('glitch');
+        }
+
+        // Theme Changer
+        function changeTheme(theme) {
+            const cards = document.querySelectorAll('.stat-card');
+
+            cards.forEach(card => {
+                card.classList.remove('hologram', 'toxic', 'mystic');
+
+                if (theme === 'hologram') {
+                    card.classList.add('hologram');
+                } else if (theme === 'toxic') {
+                    card.classList.add('toxic');
+                } else if (theme === 'mystic') {
+                    card.classList.add('mystic');
+                }
+            });
+
+            // Apply mystic theme
+            if (theme === 'mystic') {
+                const style = document.getElementById('mystic-style') || document.createElement('style');
+                style.id = 'mystic-style';
+                style.textContent = `
+                    .stat-card.mystic {
+                        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(10, 10, 10, 0.95) 100%);
+                        border-color: rgba(139, 92, 246, 0.3);
+                    }
+                    .stat-card.mystic:hover {
+                        box-shadow:
+                            inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                            0 20px 60px rgba(139, 92, 246, 0.3),
+                            0 0 0 1px rgba(139, 92, 246, 0.2),
+                            0 0 40px rgba(139, 92, 246, 0.2);
+                    }
+                    .stat-card.mystic .number {
+                        color: #8B5CF6;
+                        text-shadow:
+                            0 0 20px rgba(139, 92, 246, 0.8),
+                            0 0 40px rgba(139, 92, 246, 0.5),
+                            2px 2px 4px rgba(0, 0, 0, 0.8);
+                        filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.4));
+                    }
+                    .stat-card.mystic .icon {
+                        filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.5));
+                    }
+                    .stat-card.mystic::after {
+                        background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent);
+                    }
+                `;
+                if (!document.getElementById('mystic-style')) {
+                    document.head.appendChild(style);
+                }
+            }
+        }
+
+        // 3D Tilt Effect
+        const cards = document.querySelectorAll('.stat-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+
+                card.style.transform = `translateY(-10px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Moon Card Component</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #000 0%, #0A0A0A 50%, #1C1C1C 100%);
+            color: #E8E8E8;
+            font-family: 'Cinzel', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================
+           BLOOD MOON CARD COMPONENT
+           ============================================ */
+
+        .moon-card {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                0 4px 16px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .moon-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(220, 20, 60, 0.5);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(220, 20, 60, 0.3),
+                0 0 0 1px rgba(220, 20, 60, 0.2),
+                0 0 40px rgba(220, 20, 60, 0.2);
+        }
+
+        /* Crack Effect */
+        .moon-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(135deg, transparent 40%, rgba(220, 20, 60, 0.1) 41%, transparent 42%),
+                linear-gradient(45deg, transparent 48%, rgba(220, 20, 60, 0.1) 49%, rgba(220, 20, 60, 0.1) 51%, transparent 52%),
+                linear-gradient(90deg, transparent 60%, rgba(220, 20, 60, 0.08) 61%, transparent 62%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .moon-card:hover::after {
+            opacity: 0.4;
+        }
+
+        /* Moon Glow */
+        .moon-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.3) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Moon */
+        .moon {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #FFB6C1 0%, #DC143C 30%, #8B0000 60%, #2A0000 100%);
+            box-shadow:
+                0 0 100px rgba(220, 20, 60, 0.8),
+                0 0 150px rgba(220, 20, 60, 0.5),
+                inset -30px -30px 60px rgba(0, 0, 0, 0.6),
+                inset 20px 20px 40px rgba(255, 100, 100, 0.1);
+            position: relative;
+            z-index: 1;
+            animation: float-moon 6s ease-in-out infinite, rotateMoon 40s linear infinite;
+            transition: transform 0.1s;
+        }
+
+        @keyframes float-moon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotateMoon {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Moon Craters */
+        .moon::before {
+            content: '';
+            position: absolute;
+            top: 18%;
+            left: 22%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+            box-shadow:
+                inset -8px -8px 16px rgba(0, 0, 0, 0.5),
+                inset 4px 4px 8px rgba(139, 0, 0, 0.2);
+        }
+
+        .moon::after {
+            content: '';
+            position: absolute;
+            bottom: 28%;
+            right: 25%;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.35));
+            box-shadow:
+                inset -6px -6px 12px rgba(0, 0, 0, 0.4),
+                inset 3px 3px 6px rgba(139, 0, 0, 0.2);
+        }
+
+        .crater {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+            box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .crater-1 {
+            width: 30px;
+            height: 30px;
+            top: 45%;
+            left: 12%;
+        }
+
+        .crater-2 {
+            width: 25px;
+            height: 25px;
+            top: 65%;
+            left: 35%;
+        }
+
+        .crater-3 {
+            width: 35px;
+            height: 35px;
+            top: 30%;
+            right: 18%;
+        }
+
+        /* 3D Tilt on Hover */
+        .moon-card:hover .moon {
+            animation-play-state: paused;
+        }
+
+        /* Color Variants */
+        .moon-card.theme-blue .moon {
+            background: radial-gradient(circle at 35% 35%, #B0E0E6 0%, #4169E1 30%, #000080 60%, #000033 100%);
+            box-shadow:
+                0 0 100px rgba(65, 105, 225, 0.8),
+                0 0 150px rgba(65, 105, 225, 0.5),
+                inset -30px -30px 60px rgba(0, 0, 0, 0.6),
+                inset 20px 20px 40px rgba(100, 149, 237, 0.1);
+        }
+
+        .moon-card.theme-blue .moon-glow {
+            background: radial-gradient(circle, rgba(65, 105, 225, 0.3) 0%, transparent 70%);
+        }
+
+        .moon-card.theme-blue {
+            border-color: rgba(65, 105, 225, 0.3);
+        }
+
+        .moon-card.theme-blue:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(65, 105, 225, 0.3),
+                0 0 0 1px rgba(65, 105, 225, 0.2),
+                0 0 40px rgba(65, 105, 225, 0.2);
+        }
+
+        .moon-card.theme-green .moon {
+            background: radial-gradient(circle at 35% 35%, #98FB98 0%, #32CD32 30%, #006400 60%, #001a00 100%);
+            box-shadow:
+                0 0 100px rgba(50, 205, 50, 0.8),
+                0 0 150px rgba(50, 205, 50, 0.5),
+                inset -30px -30px 60px rgba(0, 0, 0, 0.6),
+                inset 20px 20px 40px rgba(144, 238, 144, 0.1);
+        }
+
+        .moon-card.theme-green .moon-glow {
+            background: radial-gradient(circle, rgba(50, 205, 50, 0.3) 0%, transparent 70%);
+        }
+
+        .moon-card.theme-green {
+            border-color: rgba(50, 205, 50, 0.3);
+        }
+
+        .moon-card.theme-green:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 20px 60px rgba(50, 205, 50, 0.3),
+                0 0 0 1px rgba(50, 205, 50, 0.2),
+                0 0 40px rgba(50, 205, 50, 0.2);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .theme-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 2px solid;
+            background: transparent;
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .theme-btn.red {
+            border-color: #DC143C;
+            color: #DC143C;
+        }
+
+        .theme-btn.red:hover {
+            background: rgba(220, 20, 60, 0.2);
+        }
+
+        .theme-btn.blue {
+            border-color: #4169E1;
+            color: #4169E1;
+        }
+
+        .theme-btn.blue:hover {
+            background: rgba(65, 105, 225, 0.2);
+        }
+
+        .theme-btn.green {
+            border-color: #32CD32;
+            color: #32CD32;
+        }
+
+        .theme-btn.green:hover {
+            background: rgba(50, 205, 50, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Blood Moon Card - Red -->
+    <div class="moon-card" id="moonCard1">
+        <div class="moon-glow"></div>
+        <div class="moon">
+            <div class="crater crater-1"></div>
+            <div class="crater crater-2"></div>
+            <div class="crater crater-3"></div>
+        </div>
+    </div>
+
+    <!-- Blue Moon Card -->
+    <div class="moon-card theme-blue" id="moonCard2">
+        <div class="moon-glow"></div>
+        <div class="moon">
+            <div class="crater crater-1"></div>
+            <div class="crater crater-2"></div>
+            <div class="crater crater-3"></div>
+        </div>
+    </div>
+
+    <!-- Green Moon Card -->
+    <div class="moon-card theme-green" id="moonCard3">
+        <div class="moon-glow"></div>
+        <div class="moon">
+            <div class="crater crater-1"></div>
+            <div class="crater crater-2"></div>
+            <div class="crater crater-3"></div>
+        </div>
+    </div>
+
+    <!-- Theme Controls -->
+    <div class="controls">
+        <button class="theme-btn red" onclick="changeTheme('red')">Blood Moon</button>
+        <button class="theme-btn blue" onclick="changeTheme('blue')">Frost Moon</button>
+        <button class="theme-btn green" onclick="changeTheme('green')">Harvest Moon</button>
+    </div>
+
+    <script>
+        // ============================================
+        // MOON CARD INTERACTIONS
+        // ============================================
+
+        // 3D Tilt Effect
+        const moonCards = document.querySelectorAll('.moon-card');
+
+        moonCards.forEach(card => {
+            const moon = card.querySelector('.moon');
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+
+                moon.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                moon.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Theme Changer
+        function changeTheme(theme) {
+            const card1 = document.getElementById('moonCard1');
+            const card2 = document.getElementById('moonCard2');
+            const card3 = document.getElementById('moonCard3');
+
+            card1.className = 'moon-card';
+            card2.className = 'moon-card';
+            card3.className = 'moon-card';
+
+            if (theme === 'blue') {
+                card1.classList.add('theme-blue');
+                card2.classList.add('theme-blue');
+                card3.classList.add('theme-blue');
+            } else if (theme === 'green') {
+                card1.classList.add('theme-green');
+                card2.classList.add('theme-green');
+                card3.classList.add('theme-green');
+            }
+        }
+    </script>
+</body>
+</html>
